@@ -63,7 +63,7 @@
     },
     "stopsignal": {
       "title": "Stoppsignal",
-      "desc": "Drücke bei grünen Pfeilen und halte an, wenn eine rote Hand erscheint."
+      "desc": "Drücke oder nicht — nach der Blockregel: Farbe, Form oder Vergleich mit dem vorherigen Symbol."
     }
   },
   "math": {
@@ -186,16 +186,21 @@
     }
   },
   "stopsignal": {
-    "hint": "Pfeil – drücken! Hand – nicht drücken!",
-    "trial": "Versuch: {k}/{total}",
+    "hint": "Beachte die Blockregel und drücke im richtigen Moment.",
     "score": "Punkte",
-    "press": "DRÜCK",
+    "press": "…",
     "hits": "Treffer",
     "errors": "Fehler",
     "misses": "Verpasst",
-    "a11y": {
-      "arrow": "Grüner Pfeil: jetzt drücken",
-      "hand": "Rote Hand: nicht drücken"
-    }
+    "block": "Block {n} von {total}",
+    "rule": {
+      "form": "Drücke bei ▲. Drücke nicht bei ✋.",
+      "color": "Drücke, wenn die FARBE der des vorherigen Symbols entspricht.",
+      "shape": "Drücke, wenn die FORM der vorherigen entspricht.",
+      "mixed": "Finale: Die Regel wechselt jedes Mal — achte auf das Abzeichen!"
+    },
+    "badgeColor": "FARBE",
+    "badgeShape": "FORM",
+    "remember": "Merke dir dieses Symbol…"
   }
 }

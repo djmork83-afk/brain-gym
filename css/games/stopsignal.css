@@ -51,6 +51,37 @@
   color: var(--muted);
 }
 
+/* Плашка правила блока */
+.stop-rule {
+  display: none;
+  max-width: 520px;
+  margin: 0 auto 18px;
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 2px solid var(--primary);
+  box-shadow: var(--shadow);
+  text-align: center;
+  font-weight: 800;
+  font-size: clamp(17px, 4vw, 22px);
+  line-height: 1.35;
+}
+.stop-rule.show { display: block; }
+
+/* Бейдж текущего правила (ЦВЕТ / ФИГУРА) */
+.stop-badge {
+  display: none;
+  margin-bottom: 14px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  font-size: clamp(14px, 3.4vw, 18px);
+}
+.stop-badge.show { display: inline-block; }
+
 @media (max-width: 420px) {
   .stop-face { font-size: clamp(56px, 17vw, 90px); }
 }

@@ -63,7 +63,7 @@
     },
     "stopsignal": {
       "title": "Stop Signal",
-      "desc": "Tap the green arrows and hold back when a red hand appears."
+      "desc": "Press or don't press — follow the block rule: color, shape, or matching the previous symbol."
     }
   },
   "math": {
@@ -186,16 +186,21 @@
     }
   },
   "stopsignal": {
-    "hint": "Arrow — tap! Hand — don't tap!",
-    "trial": "Trial: {k}/{total}",
+    "hint": "Watch the block rule and press at the right moments.",
     "score": "Score",
-    "press": "TAP",
+    "press": "…",
     "hits": "Accurate",
     "errors": "Errors",
     "misses": "Misses",
-    "a11y": {
-      "arrow": "Green arrow: tap now",
-      "hand": "Red hand: do not tap"
-    }
+    "block": "Block {n} of {total}",
+    "rule": {
+      "form": "Press on ▲. Don't press on ✋.",
+      "color": "Press if the COLOR matches the previous symbol.",
+      "shape": "Press if the SHAPE matches the previous one.",
+      "mixed": "Final block: the rule changes every time — watch the badge!"
+    },
+    "badgeColor": "COLOR",
+    "badgeShape": "SHAPE",
+    "remember": "Remember this symbol…"
   }
 }

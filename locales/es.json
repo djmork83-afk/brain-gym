@@ -63,7 +63,7 @@
     },
     "stopsignal": {
       "title": "Señal de stop",
-      "desc": "Pulsa las flechas verdes y frénalo cuando aparezca la mano roja."
+      "desc": "Pulsa o no — según la regla del bloque: color, figura o comparar con el símbolo anterior."
     }
   },
   "math": {
@@ -186,16 +186,21 @@
     }
   },
   "stopsignal": {
-    "hint": "¿Flecha? ¡Pulsa! ¿Mano? ¡No pulses!",
-    "trial": "Ensayo: {k}/{total}",
+    "hint": "Sigue la regla del bloque y pulsa en el momento justo.",
     "score": "Puntuación",
-    "press": "PULSA",
+    "press": "…",
     "hits": "Aciertos",
     "errors": "Errores",
     "misses": "Fallos",
-    "a11y": {
-      "arrow": "Flecha verde: hay que pulsar",
-      "hand": "Mano roja: no hay que pulsar"
-    }
+    "block": "Bloque {n} de {total}",
+    "rule": {
+      "form": "Pulsa en ▲. No pulses en ✋.",
+      "color": "Pulsa si el COLOR coincide con el símbolo anterior.",
+      "shape": "Pulsa si la FIGURA coincide con la anterior.",
+      "mixed": "Final: la regla cambia cada vez, ¡mira la etiqueta!"
+    },
+    "badgeColor": "COLOR",
+    "badgeShape": "FIGURA",
+    "remember": "Memoriza este símbolo…"
   }
 }

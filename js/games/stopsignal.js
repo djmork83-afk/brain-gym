@@ -1,24 +1,79 @@
-// stopsignal.js — «Стоп-сигнал»: жми на стрелку, но удержись, когда появится рука.
+// stopsignal.js — «Стоп-сигнал»: правило меняется по блокам — форма, цвет или сравнение
+// с предыдущим символом. Жми только тогда, когда говорит правило блока!
 import { showResult } from '../core/ui.js';
 
-const TRIALS = 25;
-const HANDS = 5; // ровно столько «рук» среди испытаний
-const SHOW_FROM = 850; // длительность показа в начале
-const SHOW_TO = 750; // ... и в конце
-const PAUSE_FROM = 450; // пауза между испытаниями в начале
-const PAUSE_TO = 330; // ... и в конце
-const GRACE = 150; // запас на ответ для стрелки после исчезновения
-const READY = 700; // пауза перед первым испытанием
-const FLASH = 280; // подсветка кнопки
-const ARROWS = ['▲', '⬆️'];
-const HAND_SIGNS = ['✋', '🚫'];
+const SHAPES = ['▲', '●', '■', '★'];
+const COLORS = ['#e5484d', '#3b82f6', '#22a06b', '#d9a406'];
+const HAND = '✋';
+
+// Блоки партии: у каждого своё правило и число испытаний
+const BLOCKS = [
+  { mode: 'form', n: 6 },   // разминка: ▲ — жми, ✋ — не жми
+  { mode: 'color', n: 8 },  // жми, если цвет такой же, как у предыдущего символа
+  { mode: 'shape', n: 8 },  // жми, если фигура такая же, как у предыдущей
+  { mode: 'mixed', n: 10 }, // финал: правило чередуется (бейдж подсказывает)
+];
+
+const SHOW_FROM = 850; // длительность показа в начале партии, мс
+const SHOW_TO = 680;   // ... и в конце
+const PAUSE_FROM = 420; // пауза между испытаниями в начале, мс
+const PAUSE_TO = 320;   // ... и в конце
+const GRACE = 180;      // окно ответа после исчезновения (для «жми»)
+const RULE_MS = 2300;   // показ плашки правила
+const SEED_MS = 1100;   // показ стартового символа (для сравнения)
+const FLASH = 260;      // подсветка кнопки
 
 function rnd(n) {
   return Math.floor(Math.random() * n);
 }
 
-function pick(arr) {
-  return arr[rnd(arr.length)];
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i -= 1) {
+    const j = rnd(i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/**
+ * Испытания блока: сразу готовые стимулы + нужно ли жать.
+ * Для блоков сравнения первым показывается стартовый символ (без реакции).
+ */
+function makeTrials(block) {
+  const n = block.n;
+  if (block.mode === 'form') {
+    return {
+      seed: null,
+      trials: Array.from({ length: n }, () => {
+        const press = Math.random() < 0.5;
+        return press
+          ? { text: '▲', css: '#22a06b', press: true, mode: 'form' }
+          : { text: HAND, css: '#c9cfdb', press: false, mode: 'form' };
+      }),
+    };
+  }
+  // блоки сравнения: половина испытаний — совпадение, половина — нет
+  const targets = shuffle(Array.from({ length: n }, (_, i) => i % 2 === 0));
+  const seed = { s: rnd(SHAPES.length), c: rnd(COLORS.length) };
+  let cur = seed;
+  const trials = [];
+  for (let i = 0; i < n; i += 1) {
+    const mode = block.mode === 'mixed' ? (Math.random() < 0.5 ? 'color' : 'shape') : block.mode;
+    const press = targets[i];
+    let s;
+    let c;
+    if (mode === 'color') {
+      c = press ? cur.c : (cur.c + 1 + rnd(COLORS.length - 1)) % COLORS.length;
+      s = rnd(SHAPES.length);
+    } else {
+      s = press ? cur.s : (cur.s + 1 + rnd(SHAPES.length - 1)) % SHAPES.length;
+      c = rnd(COLORS.length);
+    }
+    trials.push({ text: SHAPES[s], css: COLORS[c], press, mode });
+    cur = { s, c };
+  }
+  return { seed: { text: SHAPES[seed.s], css: COLORS[seed.c] }, trials };
 }
 
 export default {
@@ -28,13 +83,12 @@ export default {
     const timers = new Set();
     let destroyed = false;
     let finished = false;
-    let open = false; // открыто ли окно ответа текущего испытания
+    let open = false;      // открыто ли окно ответа текущего испытания
     let responded = false;
     let flashId = null;
     let cur = null;
-    let plan = [];
     let st = null;
-    let padEl, faceEl, trialEl, scoreEl;
+    let padEl, faceEl, ruleEl, ruleTextEl, badgeEl, blockEl, scoreEl;
 
     function after(ms, fn) {
       const id = setTimeout(() => {
@@ -57,12 +111,14 @@ export default {
         <div class="game-top">
           <button class="btn" data-role="exit">← ${t('common.back')}</button>
           <div class="hud">
-            <span class="chip" data-role="trial"></span>
+            <span class="chip" data-role="block"></span>
             <span class="chip" data-role="score"></span>
           </div>
         </div>
         <p class="stop-hint">${t('stopsignal.hint')}</p>
+        <div class="stop-rule" data-role="rule"><span data-role="ruleText"></span></div>
         <div class="stop-stage">
+          <div class="stop-badge" data-role="badge"></div>
           <button class="stop-pad" type="button" data-role="pad">
             <span class="stop-face idle" data-role="face"></span>
           </button>
@@ -70,32 +126,64 @@ export default {
       `;
       padEl = view.querySelector('[data-role="pad"]');
       faceEl = view.querySelector('[data-role="face"]');
-      trialEl = view.querySelector('[data-role="trial"]');
+      ruleEl = view.querySelector('[data-role="rule"]');
+      ruleTextEl = view.querySelector('[data-role="ruleText"]');
+      badgeEl = view.querySelector('[data-role="badge"]');
+      blockEl = view.querySelector('[data-role="block"]');
       scoreEl = view.querySelector('[data-role="score"]');
       view.querySelector('[data-role="exit"]').addEventListener('click', () => ctx.exit());
-      padEl.addEventListener('click', () => onPad());
+      padEl.addEventListener('click', onPad);
       hideStimulus();
     }
 
     function updateHud() {
-      const shown = Math.min(st.index + 1, TRIALS);
-      trialEl.textContent = t('stopsignal.trial', { k: shown, total: TRIALS });
-      scoreEl.textContent = `${t('stopsignal.score')}: ${st.score}`;
+      blockEl.textContent = t('stopsignal.block', { n: st.block + 1, total: BLOCKS.length });
+      scoreEl.textContent = `${t('common.score')}: ${st.score}`;
     }
 
-    function showStimulus(isHand) {
-      padEl.classList.toggle('hand', isHand);
-      padEl.classList.toggle('arrow', !isHand);
-      faceEl.className = `stop-face ${isHand ? 'hand' : 'arrow'}`;
-      faceEl.textContent = isHand ? pick(HAND_SIGNS) : pick(ARROWS);
-      padEl.setAttribute('aria-label', isHand ? t('stopsignal.a11y.hand') : t('stopsignal.a11y.arrow'));
+    function showRule(text) {
+      ruleTextEl.textContent = text;
+      ruleEl.classList.add('show');
+    }
+
+    function hideRule() {
+      ruleEl.classList.remove('show');
+    }
+
+    function showBadge(mode) {
+      if (mode === 'color') {
+        badgeEl.textContent = t('stopsignal.badgeColor');
+        badgeEl.classList.add('show');
+      } else if (mode === 'shape') {
+        badgeEl.textContent = t('stopsignal.badgeShape');
+        badgeEl.classList.add('show');
+      } else {
+        badgeEl.classList.remove('show');
+      }
+    }
+
+    function showStimulus(tr) {
+      padEl.classList.remove('ok', 'bad', 'miss');
+      faceEl.className = 'stop-face';
+      faceEl.style.color = tr.css;
+      faceEl.textContent = tr.text;
+      showBadge(tr.mode);
+    }
+
+    function showSeed(seed) {
+      padEl.classList.remove('ok', 'bad', 'miss');
+      faceEl.className = 'stop-face';
+      faceEl.style.color = seed.css;
+      faceEl.textContent = seed.text;
+      badgeEl.textContent = t('stopsignal.remember');
+      badgeEl.classList.add('show');
     }
 
     function hideStimulus() {
-      padEl.classList.remove('arrow', 'hand');
       faceEl.className = 'stop-face idle';
+      faceEl.style.color = '';
       faceEl.textContent = t('stopsignal.press');
-      padEl.setAttribute('aria-label', t('stopsignal.press'));
+      badgeEl.classList.remove('show');
     }
 
     function flash(cls) {
@@ -111,75 +199,110 @@ export default {
       });
     }
 
-    /** Длительность показа для испытания k (0..24). */
+    /** Длительность показа: темп подтягивается к концу партии. */
     function showDur(k) {
-      return Math.round(SHOW_FROM - ((SHOW_FROM - SHOW_TO) * k) / (TRIALS - 1));
+      return Math.round(SHOW_FROM - ((SHOW_FROM - SHOW_TO) * Math.min(k, 40)) / 40);
     }
 
-    /** Пауза после испытания k (0..24). */
     function pauseDur(k) {
-      return Math.round(PAUSE_FROM - ((PAUSE_FROM - PAUSE_TO) * k) / (TRIALS - 1));
-    }
-
-    /** 25 испытаний: 5 «рук» в случайных местах, первое — всегда стрелка. */
-    function makePlan() {
-      const hands = new Set();
-      while (hands.size < HANDS) hands.add(1 + rnd(TRIALS - 1));
-      return Array.from({ length: TRIALS }, (_, i) => (hands.has(i) ? 'hand' : 'arrow'));
+      return Math.round(PAUSE_FROM - ((PAUSE_FROM - PAUSE_TO) * Math.min(k, 40)) / 40);
     }
 
     function onPad() {
       if (destroyed || finished || !open || responded || !cur) return;
       responded = true;
       open = false;
-      if (cur.isHand) {
-        st.errors += 1;
-        st.score -= 10;
-        flash('bad');
-      } else {
-        st.hits += 1;
+      if (cur.press) {
         st.score += 10;
+        st.ok += 1;
         flash('ok');
+      } else {
+        st.score -= 5;
+        st.errors += 1;
+        flash('bad');
       }
       updateHud();
     }
 
     function runTrial() {
       if (destroyed || finished) return;
-      const k = st.index;
-      const isHand = plan[k] === 'hand';
-      cur = { isHand };
+      if (st.idx >= st.trials.length) {
+        endBlock();
+        return;
+      }
+      const tr = st.trials[st.idx];
+      cur = tr;
       responded = false;
       open = true;
       updateHud();
-      showStimulus(isHand);
+      showStimulus(tr);
 
+      const k = st.done;
       const show = showDur(k);
       after(show, () => {
         hideStimulus();
-        if (isHand) open = false; // на «руку» можно было нажать только пока она видна
+        if (!tr.press) open = false; // по «не жми» кликать можно было только пока видно
       });
 
       after(show + GRACE, () => {
         open = false;
         if (!responded) {
           responded = true;
-          if (isHand) {
-            st.correctReject += 1;
-            st.score += 5;
-            flash('ok');
-          } else {
+          if (tr.press) {
             st.misses += 1;
+            st.score -= 5;
             flash('miss');
+          } else {
+            st.ok += 1;
+            st.score += 10;
+            flash('ok');
           }
           updateHud();
         }
-        after(pauseDur(k), () => {
-          st.index += 1;
-          if (st.index >= TRIALS) finish();
-          else runTrial();
+        st.idx += 1;
+        st.done += 1;
+        after(pauseDur(k), runTrial);
+      });
+    }
+
+    function ruleTextFor(mode) {
+      if (mode === 'form') return t('stopsignal.rule.form');
+      if (mode === 'color') return t('stopsignal.rule.color');
+      if (mode === 'shape') return t('stopsignal.rule.shape');
+      return t('stopsignal.rule.mixed');
+    }
+
+    function startBlock() {
+      if (destroyed || finished) return;
+      const block = BLOCKS[st.block];
+      const made = makeTrials(block);
+      st.seed = made.seed;
+      st.trials = made.trials;
+      st.idx = 0;
+      updateHud();
+      showRule(ruleTextFor(block.mode));
+      after(RULE_MS, () => {
+        hideRule();
+        if (!st.seed) {
+          runTrial();
+          return;
+        }
+        showSeed(st.seed);
+        after(SEED_MS, () => {
+          hideStimulus();
+          runTrial();
         });
       });
+    }
+
+    function endBlock() {
+      hideStimulus();
+      st.block += 1;
+      if (st.block < BLOCKS.length) {
+        after(400, startBlock);
+      } else {
+        finish();
+      }
     }
 
     function finish() {
@@ -188,19 +311,19 @@ export default {
       open = false;
       clearTimers();
       const durationSec = Math.round((Date.now() - st.startedAt) / 1000);
-      const hits = st.hits + st.correctReject;
+      const total = BLOCKS.reduce((s, b) => s + b.n, 0);
       const rec = ctx.finish({
         score: st.score,
         xp: Math.max(0, Math.round(st.score / 2)),
-        correct: hits,
-        total: TRIALS,
+        correct: st.ok,
+        total,
         durationSec,
       });
       showResult(view, {
         gameTitle: t('game.stopsignal.title'),
         score: st.score,
         stats: [
-          { label: t('stopsignal.hits'), value: String(hits) },
+          { label: t('stopsignal.hits'), value: String(st.ok) },
           { label: t('stopsignal.errors'), value: String(st.errors) },
           { label: t('stopsignal.misses'), value: String(st.misses) },
         ],
@@ -213,15 +336,17 @@ export default {
 
     function startGame() {
       clearTimers();
-      st = { index: 0, score: 0, hits: 0, errors: 0, misses: 0, correctReject: 0, startedAt: Date.now() };
-      plan = makePlan();
+      st = {
+        block: 0, idx: 0, done: 0, trials: [], seed: null,
+        score: 0, ok: 0, errors: 0, misses: 0, startedAt: Date.now(),
+      };
       finished = false;
       open = false;
       responded = false;
       cur = null;
       build();
       updateHud();
-      after(READY, runTrial);
+      startBlock();
     }
 
     function restart() {

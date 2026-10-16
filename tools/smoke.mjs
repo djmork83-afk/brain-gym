@@ -237,6 +237,21 @@ async function main() {
   const p1 = await evaluate(`document.querySelectorAll('.park-slot.has').length`);
   check('parking: старт с пустой парковки, первые машины заезжают', p0 === 0 && p1 >= 1, `0.4s: ${p0} машин, 2.7s: ${p1}`);
 
+  // Стоп-сигнал: плашка правила показана; испытания идут (состояния кнопки мигают)
+  await evaluate('location.hash = "#/game/stopsignal"');
+  await sleep(600);
+  const ruleShown = await evaluate(`(() => { const r = document.querySelector('.stop-rule.show'); return !!(r && r.textContent.trim()); })()`);
+  await evaluate(`(() => {
+    window.__flashes = 0;
+    const el = document.querySelector('.stop-pad');
+    const obs = new MutationObserver(() => { if (/\\b(ok|bad|miss)\\b/.test(el.className)) window.__flashes += 1; });
+    obs.observe(el, { attributes: true, attributeFilter: ['class'] });
+    return true;
+  })()`);
+  await sleep(9000);
+  const flashes = await evaluate('window.__flashes');
+  check('stopsignal: правило блока показано, испытания идут', !!ruleShown && flashes > 0, `rule=${ruleShown} flashes=${flashes}`);
+
   // Созвездия: фигура соединяется линией; дуга из 4 звёзд, сдвинутая по кругу, = повтор
   await evaluate('location.hash = "#/game/constellations"');
   await sleep(900);

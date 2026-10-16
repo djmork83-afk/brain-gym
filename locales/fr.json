@@ -63,7 +63,7 @@
     },
     "stopsignal": {
       "title": "Signal stop",
-      "desc": "Appuie sur les flèches vertes et retiens-toi quand une main rouge apparaît."
+      "desc": "Appuie ou pas — selon la règle du bloc : couleur, forme ou comparaison avec le symbole précédent."
     }
   },
   "math": {
@@ -186,16 +186,21 @@
     }
   },
   "stopsignal": {
-    "hint": "Flèche — appuie ! Main — n'appuie pas !",
-    "trial": "Essai : {k}/{total}",
+    "hint": "Suis la règle du bloc et appuie au bon moment.",
     "score": "Score",
-    "press": "APPUIE",
+    "press": "…",
     "hits": "Corrects",
     "errors": "Erreurs",
     "misses": "Ratés",
-    "a11y": {
-      "arrow": "Flèche verte : il faut appuyer",
-      "hand": "Main rouge : ne pas appuyer"
-    }
+    "block": "Bloc {n} sur {total}",
+    "rule": {
+      "form": "Appuie sur ▲. N'appuie pas sur ✋.",
+      "color": "Appuie si la COULEUR est la même que le symbole précédent.",
+      "shape": "Appuie si la FIGURE est la même que la précédente.",
+      "mixed": "Finale : la règle change à chaque fois — regarde le badge !"
+    },
+    "badgeColor": "COULEUR",
+    "badgeShape": "FIGURE",
+    "remember": "Mémorise ce symbole…"
   }
 }
