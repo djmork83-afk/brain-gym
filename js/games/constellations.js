@@ -1,14 +1,11 @@
 // constellations.js — «Созвездия»: за 60 секунд придумай как можно больше новых ФИГУР из 4 звёзд.
-// Звёзды — два круга: внешний (12) и внутренний (9), как на настоящем звёздном небе.
+// Звёзды — 12 на одном круге, как на звёздном небе.
 // Повтор считается по форме: та же фигура в другом месте (или повёрнутая) — уже повтор.
 import { el, fmtTime, showResult } from '../core/ui.js';
 
-const OUTER = 12;      // звёзд на внешнем круге
-const INNER = 9;       // звёзд на внутреннем круге
-const STARS = OUTER + INNER;
+const STARS = 12;      // все звёзды — на одном круге
 const R_OUTER = 1;
-const R_INNER = 0.55;  // радиус внутреннего круга (в долях внешнего)
-const SPREAD = 44;     // % смещения крайней звезды от центра поля на экране
+const SPREAD = 44;     // % смещения звезды от центра поля на экране
 const DURATION = 60;
 const PICK = 4;
 const UNIQUE_POINTS = 10;
@@ -17,16 +14,11 @@ const FLASH_MS = 700;
 const RESET_MS = 250;
 const LOW_TIME = 10;
 
-// Идеальные координаты звёзд (единица = радиус внешнего круга)
+// Идеальные координаты звёзд (единица = радиус круга)
 const STAR_POS = [];
-for (let i = 0; i < OUTER; i += 1) {
-  const a = (i * 2 * Math.PI) / OUTER;
+for (let i = 0; i < STARS; i += 1) {
+  const a = (i * 2 * Math.PI) / STARS;
   STAR_POS.push([R_OUTER * Math.cos(a), R_OUTER * Math.sin(a)]);
-}
-for (let i = 0; i < INNER; i += 1) {
-  // внутреннее кольцо смещено на полшага, чтобы лучи не совпадали с внешними
-  const a = (i * 2 * Math.PI) / INNER + Math.PI / INNER;
-  STAR_POS.push([R_INNER * Math.cos(a), R_INNER * Math.sin(a)]);
 }
 
 export default {
@@ -75,7 +67,6 @@ export default {
           <svg class="const-lines" data-role="lines" aria-hidden="true"></svg>
           <div class="const-sky" data-role="sky" role="group" aria-label="${t('constellations.hint')}">
             <div class="const-ring" style="width:88%;height:88%;left:6%;top:6%"></div>
-            <div class="const-ring" style="width:48.4%;height:48.4%;left:25.8%;top:25.8%"></div>
           </div>
           <div class="const-flash" data-role="flash" role="status">${t('constellations.repeat')}</div>
         </div>

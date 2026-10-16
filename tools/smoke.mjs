@@ -208,7 +208,7 @@ async function main() {
     { id: 'parking', sel: '.park-slot', want: 12 },
     { id: 'stopsignal', sel: '.stop-pad', want: 1 },
     { id: 'shopping', sel: '.shop-row', want: 3 },
-    { id: 'constellations', sel: '.const-star', want: 21 },
+    { id: 'constellations', sel: '.const-star', want: 12 },
   ];
   for (const g of TOUR) {
     await evaluate(`location.hash = "#/game/${g.id}"`);
@@ -250,12 +250,12 @@ async function main() {
   await evaluate(clk([4, 5, 6, 7]));
   await sleep(500);
   const cs2 = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
-  await evaluate(clk([12, 13, 14, 15]));
+  await evaluate(clk([0, 1, 2, 6]));
   await sleep(500);
   const cs3 = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
   check('constellations: фигура соединяется линией', lines >= 1, `path=${lines}`);
   check('constellations: дуга из 4 звёзд +10, та же дуга со сдвигом — повтор', /10/.test(cs1) && /:\s*0$/.test(cs2), `${cs1} -> ${cs2}`);
-  check('constellations: дуга на внутреннем круге — НЕ повтор (другой размер)', /:\s*10$/.test(cs3), cs3);
+  check('constellations: другая фигура — НЕ повтор', /:\s*10$/.test(cs3), cs3);
 
   check('без JS-исключений на странице', pageErrors.length === 0, pageErrors.join(' | ').slice(0, 300));
 
