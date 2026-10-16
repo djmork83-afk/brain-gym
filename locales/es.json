@@ -1,0 +1,63 @@
+{
+  "app": { "title": "BrainGym", "tagline": "Entrena tu cerebro jugando" },
+  "nav": { "games": "Juegos", "profile": "Progreso" },
+  "common": {
+    "level": "Nivel",
+    "streak": "Racha de días",
+    "best": "Récord",
+    "play": "Jugar",
+    "again": "Jugar otra vez",
+    "back": "Todos los juegos",
+    "share": "Compartir",
+    "score": "Puntos",
+    "correct": "Correctas",
+    "accuracy": "Precisión",
+    "time": "Tiempo",
+    "xp": "XP"
+  },
+  "home": {
+    "lead": "Elige un juego y entrena tu cerebro. Gratis, sin anuncios y sin registro: memoria, atención y cálculo."
+  },
+  "game": {
+    "math": { "title": "Cálculo rápido", "desc": "Resuelve operaciones lo más rápido posible: la dificultad sube sola." },
+    "memory": { "title": "Encuentra las parejas", "desc": "Voltea cartas y encuentra las iguales. Entrena la memoria." },
+    "stroop": { "title": "Color y palabra", "desc": "Toca el color con el que está ESCRITA la palabra. Entrena la atención." }
+  },
+  "math": { "combo": "Combo", "bestCombo": "Mejor combo" },
+  "memory": { "level": "¡Nivel {n}!", "pairs": "Parejas", "moves": "Movimientos" },
+  "stroop": {
+    "hint": "Toca el color con el que está ESCRITA la palabra",
+    "color": {
+      "red": "Rojo",
+      "blue": "Azul",
+      "green": "Verde",
+      "yellow": "Amarillo",
+      "purple": "Morado",
+      "orange": "Naranja"
+    }
+  },
+  "result": { "newRecord": "¡Nuevo récord!" },
+  "profile": {
+    "title": "Mi progreso",
+    "subtitle": "El progreso vive en este navegador. Guárdalo en un archivo para pasar a otro dispositivo.",
+    "toNext": "{n} XP para el siguiente nivel",
+    "bestStreak": "Mejor racha",
+    "plays": "Partidas jugadas",
+    "best": "Récords",
+    "history": "Últimas partidas",
+    "noHistory": "Aún no hay nada: ¡juega tu primera partida!",
+    "export": "Guardar en archivo",
+    "import": "Cargar desde archivo",
+    "reset": "Borrar progreso",
+    "resetConfirm": "¿Borrar todo el progreso?",
+    "imported": "Progreso cargado",
+    "importFailed": "No se pudo leer el archivo"
+  },
+  "share": {
+    "text": "Mi resultado: {score} puntos en «{game}» 🧠 ¿Puedes superarlo? {url}",
+    "copied": "Copiado — mándalo a un amigo",
+    "failed": "No se pudo compartir"
+  },
+  "footer": { "line": "Gratis y sin anuncios. Hecho para que la gente crezca." },
+  "lang": { "label": "Idioma" }
+}

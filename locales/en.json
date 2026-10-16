@@ -1,0 +1,63 @@
+{
+  "app": { "title": "BrainGym", "tagline": "Train your brain, playfully" },
+  "nav": { "games": "Games", "profile": "Progress" },
+  "common": {
+    "level": "Level",
+    "streak": "Day streak",
+    "best": "Best",
+    "play": "Play",
+    "again": "Play again",
+    "back": "All games",
+    "share": "Share",
+    "score": "Score",
+    "correct": "Correct",
+    "accuracy": "Accuracy",
+    "time": "Time",
+    "xp": "XP"
+  },
+  "home": {
+    "lead": "Pick a game and train your brain. Free, no ads, no sign-up: memory, attention and mental math."
+  },
+  "game": {
+    "math": { "title": "Quick Math", "desc": "Solve problems as fast as you can — difficulty grows on its own." },
+    "memory": { "title": "Find the Pairs", "desc": "Flip cards and match identical ones. Trains memory." },
+    "stroop": { "title": "Color & Word", "desc": "Tap the color the word is WRITTEN in. Trains attention." }
+  },
+  "math": { "combo": "Combo", "bestCombo": "Best combo" },
+  "memory": { "level": "Level {n}!", "pairs": "Pairs", "moves": "Moves" },
+  "stroop": {
+    "hint": "Tap the color the word is WRITTEN in",
+    "color": {
+      "red": "Red",
+      "blue": "Blue",
+      "green": "Green",
+      "yellow": "Yellow",
+      "purple": "Purple",
+      "orange": "Orange"
+    }
+  },
+  "result": { "newRecord": "New record!" },
+  "profile": {
+    "title": "My progress",
+    "subtitle": "Progress lives in this browser. Save it to a file to move to another device.",
+    "toNext": "{n} XP to the next level",
+    "bestStreak": "Best streak",
+    "plays": "Games played",
+    "best": "Records",
+    "history": "Recent games",
+    "noHistory": "Nothing yet — play your first game!",
+    "export": "Save to file",
+    "import": "Load from file",
+    "reset": "Reset progress",
+    "resetConfirm": "Reset all progress for sure?",
+    "imported": "Progress loaded",
+    "importFailed": "Could not read the file"
+  },
+  "share": {
+    "text": "My score: {score} in “{game}” 🧠 Try to beat it: {url}",
+    "copied": "Copied — send it to a friend",
+    "failed": "Sharing failed"
+  },
+  "footer": { "line": "Free, no ads. Made to help people grow." },
+  "lang": { "label": "Language" }
+}

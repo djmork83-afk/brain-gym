@@ -1,0 +1,63 @@
+{
+  "app": { "title": "BrainGym", "tagline": "Entraîne ton cerveau en jouant" },
+  "nav": { "games": "Jeux", "profile": "Progrès" },
+  "common": {
+    "level": "Niveau",
+    "streak": "Série de jours",
+    "best": "Record",
+    "play": "Jouer",
+    "again": "Rejouer",
+    "back": "Tous les jeux",
+    "share": "Partager",
+    "score": "Points",
+    "correct": "Correct",
+    "accuracy": "Précision",
+    "time": "Temps",
+    "xp": "XP"
+  },
+  "home": {
+    "lead": "Choisis un jeu et entraîne ton cerveau. Gratuit, sans pub, sans inscription : mémoire, attention et calcul."
+  },
+  "game": {
+    "math": { "title": "Calcul rapide", "desc": "Résous des opérations le plus vite possible — la difficulté monte toute seule." },
+    "memory": { "title": "Trouve les paires", "desc": "Retourne les cartes et trouve les paires. Entraîne la mémoire." },
+    "stroop": { "title": "Couleur et mot", "desc": "Touche la couleur dans laquelle le mot est ÉCRIT. Entraîne l'attention." }
+  },
+  "math": { "combo": "Combo", "bestCombo": "Meilleur combo" },
+  "memory": { "level": "Niveau {n} !", "pairs": "Paires", "moves": "Coups" },
+  "stroop": {
+    "hint": "Touche la couleur dans laquelle le mot est ÉCRIT",
+    "color": {
+      "red": "Rouge",
+      "blue": "Bleu",
+      "green": "Vert",
+      "yellow": "Jaune",
+      "purple": "Violet",
+      "orange": "Orange"
+    }
+  },
+  "result": { "newRecord": "Nouveau record !" },
+  "profile": {
+    "title": "Mon progrès",
+    "subtitle": "Le progrès vit dans ce navigateur. Sauvegarde-le dans un fichier pour changer d'appareil.",
+    "toNext": "encore {n} XP avant le niveau suivant",
+    "bestStreak": "Meilleure série",
+    "plays": "Parties jouées",
+    "best": "Records",
+    "history": "Dernières parties",
+    "noHistory": "Rien encore — joue ta première partie !",
+    "export": "Sauvegarder dans un fichier",
+    "import": "Charger depuis un fichier",
+    "reset": "Réinitialiser le progrès",
+    "resetConfirm": "Réinitialiser tout le progrès ?",
+    "imported": "Progrès chargé",
+    "importFailed": "Impossible de lire le fichier"
+  },
+  "share": {
+    "text": "Mon score : {score} points à « {game} » 🧠 Essaie de faire mieux : {url}",
+    "copied": "Copié — envoie-le à un ami",
+    "failed": "Échec du partage"
+  },
+  "footer": { "line": "Gratuit, sans pub. Fait pour aider les gens à progresser." },
+  "lang": { "label": "Langue" }
+}

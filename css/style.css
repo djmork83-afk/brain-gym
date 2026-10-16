@@ -1,0 +1,218 @@
+/* BrainGym — вся вёрстка и темы. Без внешних зависимостей. */
+
+:root {
+  --bg: #f5f6fb;
+  --card: #ffffff;
+  --card-2: #f0f1f8;
+  --text: #191b23;
+  --muted: #5b6270;
+  --border: #e3e5ee;
+  --primary: #4f46e5;
+  --primary-ink: #ffffff;
+  --primary-soft: #e9e8fd;
+  --ok-bg: #ddf5e5;  --ok-bd: #1d9e57;  --ok-ink: #0b6b3a;
+  --bad-bg: #fde3e3; --bad-bd: #dc2626; --bad-ink: #b91c1c;
+  --warn-bg: #fff4d6; --warn-ink: #8a5a00;
+  --shadow: 0 10px 26px rgba(25, 27, 35, 0.08);
+  --radius: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1117;
+    --card: #171a23;
+    --card-2: #1f2330;
+    --text: #eef0f6;
+    --muted: #9aa1b1;
+    --border: #272c3b;
+    --primary: #7c7cf0;
+    --primary-soft: #24254a;
+    --ok-bg: #11301f;  --ok-bd: #2ecc71;  --ok-ink: #7ee2a8;
+    --bad-bg: #3a1515; --bad-bd: #e05555; --bad-ink: #ff9d9d;
+    --warn-bg: #3a2f10; --warn-ink: #ffd88a;
+    --shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; border-radius: 8px; }
+
+/* ---------- Шапка ---------- */
+.top {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 12px 20px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-weight: 800; font-size: 20px; display: flex; align-items: center; gap: 8px; }
+.nav { display: flex; gap: 4px; margin-left: 6px; }
+.nav a { padding: 8px 12px; border-radius: 10px; color: var(--muted); font-weight: 600; }
+.nav a.active { background: var(--primary-soft); color: var(--primary); }
+.hstats { margin-left: auto; display: flex; gap: 8px; }
+.badge {
+  background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 12px; font-weight: 700; font-size: 14px; white-space: nowrap;
+}
+#lang-select {
+  background: var(--card); color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 7px 10px; font-weight: 600; cursor: pointer;
+}
+
+/* ---------- Общий каркас ---------- */
+.view { flex: 1; width: 100%; max-width: 960px; margin: 0 auto; padding: 26px 20px 60px; }
+.foot { text-align: center; color: var(--muted); padding: 20px; font-size: 14px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+h1.title { font-size: clamp(24px, 4vw, 34px); margin: 4px 0 6px; }
+p.lead { color: var(--muted); font-size: 17px; max-width: 680px; line-height: 1.5; }
+.muted { color: var(--muted); }
+
+/* ---------- Кнопки ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid var(--border); background: var(--card); color: var(--text);
+  padding: 11px 18px; border-radius: 12px; font-weight: 700; cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn.primary { background: var(--primary); border-color: var(--primary); color: var(--primary-ink); }
+.btn.big { padding: 14px 22px; font-size: 17px; }
+.btn.danger { color: var(--bad-ink); border-color: var(--bad-bd); }
+
+/* ---------- Главная: карточки игр ---------- */
+.games { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: 22px; }
+.game-card {
+  display: flex; flex-direction: column; gap: 10px; padding: 18px;
+  cursor: pointer; transition: transform 0.12s ease;
+}
+.game-card:hover { transform: translateY(-2px); }
+.game-icon {
+  width: 64px; height: 64px; display: grid; place-items: center;
+  font-size: 34px; border-radius: 18px; background: var(--primary-soft);
+}
+.game-card h3 { margin: 0; font-size: 19px; }
+.game-card p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.45; flex: 1; }
+.game-meta { color: var(--muted); font-size: 13.5px; }
+.game-card[data-hue="indigo"] .game-icon { background: #e8e7fd; }
+.game-card[data-hue="green"] .game-icon { background: #dcf5e6; }
+.game-card[data-hue="orange"] .game-icon { background: #fdeed7; }
+@media (prefers-color-scheme: dark) {
+  .game-card[data-hue="indigo"] .game-icon { background: #23244a; }
+  .game-card[data-hue="green"] .game-icon { background: #12331f; }
+  .game-card[data-hue="orange"] .game-icon { background: #3a2a12; }
+}
+
+/* ---------- Общее для игр ---------- */
+.game-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.game-top .hud { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+  padding: 7px 13px; font-weight: 700; font-size: 14px; white-space: nowrap;
+}
+.game-top .chip.time { margin-left: auto; }
+.timerbar { height: 10px; border-radius: 999px; background: var(--card-2); overflow: hidden; margin: 4px 0 20px; }
+.timerbar > i { display: block; height: 100%; width: 100%; background: var(--primary); border-radius: inherit; transition: width 1s linear; }
+.timerbar.low > i { background: var(--bad-bd); }
+
+/* ---------- Математика ---------- */
+.math-question {
+  text-align: center; font-weight: 800; letter-spacing: 0.02em;
+  font-size: clamp(40px, 9vw, 64px); margin: 26px 0 30px;
+}
+.math-answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 540px; margin: 0 auto; }
+.answer { font-size: 27px; font-weight: 800; padding: 22px 10px; }
+.answer.ok { background: var(--ok-bg); border-color: var(--ok-bd); color: var(--ok-ink); }
+.answer.bad { background: var(--bad-bg); border-color: var(--bad-bd); color: var(--bad-ink); }
+
+/* ---------- Память ---------- */
+.mgrid { display: grid; gap: 10px; margin: 0 auto; max-width: 560px; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); }
+.mcard {
+  aspect-ratio: 1 / 1; border-radius: 14px; border: 1px solid var(--border);
+  font-size: clamp(22px, 5vw, 34px); display: grid; place-items: center;
+  cursor: pointer; user-select: none; padding: 0;
+  background: repeating-linear-gradient(135deg, var(--card-2), var(--card-2) 7px, var(--bg) 7px, var(--bg) 14px);
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+.mcard.flipped, .mcard.matched { background: var(--card); }
+.mcard.matched { border-color: var(--ok-bd); background: var(--ok-bg); cursor: default; }
+.mcard:hover:not(.matched) { transform: translateY(-1px); }
+
+/* ---------- Stroop ---------- */
+.stroop-hint { text-align: center; color: var(--muted); font-size: 15px; margin: 0 0 6px; }
+.stroop-word { text-align: center; font-weight: 900; letter-spacing: 0.03em; font-size: clamp(46px, 11vw, 82px); margin: 18px 0 26px; }
+.swatches { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.swatch {
+  width: 88px; height: 66px; border-radius: 14px; border: none; cursor: pointer;
+  box-shadow: var(--shadow); transition: transform 0.08s ease, outline 0.08s ease;
+}
+.swatch:hover { transform: translateY(-2px) scale(1.03); }
+.swatch.ok { outline: 4px solid var(--ok-bd); }
+.swatch.bad { outline: 4px solid var(--bad-bd); }
+
+/* ---------- Панель результата ---------- */
+.result { max-width: 520px; margin: 10px auto; padding: 28px; text-align: center; }
+.result h2 { margin: 0 0 2px; font-size: 24px; }
+.result .big-score { font-size: clamp(46px, 10vw, 72px); font-weight: 900; color: var(--primary); margin: 6px 0 10px; }
+.result .rows { display: grid; gap: 6px; margin: 14px 0 20px; text-align: left; }
+.result .row, .panel .row { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed var(--border); padding: 8px 2px; }
+.result .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.record-badge { display: inline-block; background: var(--warn-bg); color: var(--warn-ink); border-radius: 999px; padding: 6px 14px; font-weight: 800; margin-bottom: 10px; }
+
+/* ---------- Профиль ---------- */
+.profile-grid { display: grid; gap: 16px; margin-top: 20px; }
+.panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; }
+.panel h3 { margin: 0 0 12px; font-size: 17px; }
+.levelbar { height: 12px; background: var(--card-2); border-radius: 999px; overflow: hidden; margin: 6px 0 8px; }
+.levelbar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), #8b5cf6); border-radius: inherit; }
+.kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.kv .cell { background: var(--card-2); border-radius: 12px; padding: 14px 10px; text-align: center; }
+.kv .cell b { display: block; font-size: 26px; }
+.kv .cell span { color: var(--muted); font-size: 13px; }
+.history { display: grid; gap: 6px; }
+.history .hrow {
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  padding: 9px 12px; background: var(--card-2); border-radius: 10px; font-size: 14px;
+}
+.actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.actions-row label.btn { position: relative; overflow: hidden; }
+
+/* ---------- Тосты ---------- */
+.toast-host {
+  position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 20px);
+  background: #11131a; color: #fff; padding: 12px 18px; border-radius: 12px;
+  opacity: 0; pointer-events: none; transition: all 0.2s ease; z-index: 50;
+  font-weight: 600; max-width: min(90vw, 520px); text-align: center;
+}
+.toast-host.show { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-color-scheme: dark) {
+  .toast-host { background: #e8eaf2; color: #14161d; }
+}
+
+/* ---------- Узкие экраны ---------- */
+@media (max-width: 560px) {
+  .view { padding: 18px 14px 48px; }
+  .top { padding: 10px 14px; gap: 8px; }
+  .nav a { padding: 8px 10px; }
+  .swatch { width: 72px; height: 58px; }
+}

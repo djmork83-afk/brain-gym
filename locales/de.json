@@ -1,0 +1,63 @@
+{
+  "app": { "title": "BrainGym", "tagline": "Trainiere dein Gehirn beim Spielen" },
+  "nav": { "games": "Spiele", "profile": "Fortschritt" },
+  "common": {
+    "level": "Level",
+    "streak": "Tages-Serie",
+    "best": "Rekord",
+    "play": "Spielen",
+    "again": "Nochmal spielen",
+    "back": "Alle Spiele",
+    "share": "Teilen",
+    "score": "Punkte",
+    "correct": "Richtig",
+    "accuracy": "Genauigkeit",
+    "time": "Zeit",
+    "xp": "XP"
+  },
+  "home": {
+    "lead": "Wähle ein Spiel und trainiere dein Gehirn. Kostenlos, ohne Werbung, ohne Anmeldung: Gedächtnis, Aufmerksamkeit und Rechnen."
+  },
+  "game": {
+    "math": { "title": "Schnellrechnen", "desc": "Löse Aufgaben so schnell du kannst — der Schwierigkeitsgrad steigt von selbst." },
+    "memory": { "title": "Finde die Paare", "desc": "Decke Karten auf und finde gleiche Paare. Trainiert das Gedächtnis." },
+    "stroop": { "title": "Farbe & Wort", "desc": "Tippe die Farbe an, in der das Wort GESCHRIEBEN ist. Trainiert die Aufmerksamkeit." }
+  },
+  "math": { "combo": "Kombo", "bestCombo": "Beste Kombo" },
+  "memory": { "level": "Level {n}!", "pairs": "Paare", "moves": "Züge" },
+  "stroop": {
+    "hint": "Tippe die Farbe an, in der das Wort GESCHRIEBEN ist",
+    "color": {
+      "red": "Rot",
+      "blue": "Blau",
+      "green": "Grün",
+      "yellow": "Gelb",
+      "purple": "Lila",
+      "orange": "Orange"
+    }
+  },
+  "result": { "newRecord": "Neuer Rekord!" },
+  "profile": {
+    "title": "Mein Fortschritt",
+    "subtitle": "Der Fortschritt liegt in diesem Browser. Speichere ihn als Datei, um das Gerät zu wechseln.",
+    "toNext": "noch {n} XP bis zum nächsten Level",
+    "bestStreak": "Beste Serie",
+    "plays": "Gespielte Runden",
+    "best": "Rekorde",
+    "history": "Letzte Runden",
+    "noHistory": "Noch nichts — spiele deine erste Runde!",
+    "export": "In Datei speichern",
+    "import": "Aus Datei laden",
+    "reset": "Fortschritt zurücksetzen",
+    "resetConfirm": "Wirklich allen Fortschritt zurücksetzen?",
+    "imported": "Fortschritt geladen",
+    "importFailed": "Datei konnte nicht gelesen werden"
+  },
+  "share": {
+    "text": "Mein Ergebnis: {score} Punkte in „{game}“ 🧠 Schaffst du mehr? {url}",
+    "copied": "Kopiert — schick es einem Freund",
+    "failed": "Teilen fehlgeschlagen"
+  },
+  "footer": { "line": "Kostenlos und ohne Werbung. Damit Menschen sich weiterentwickeln." },
+  "lang": { "label": "Sprache" }
+}
