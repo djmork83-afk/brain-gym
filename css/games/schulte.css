@@ -1,0 +1,55 @@
+/* schulte.css — «Таблица Шульте»: сетка 5×5 с числами. */
+
+.schulte-hint {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 14px;
+}
+
+.schulte-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  max-width: 520px;
+  margin: 0 auto;
+  transition: opacity 0.25s ease;
+}
+.schulte-grid.done { opacity: 0.45; pointer-events: none; }
+
+.schulte-cell {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text);
+  font-weight: 800;
+  font-size: clamp(18px, 5.2vw, 28px);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease, transform 0.08s ease;
+}
+.schulte-cell:hover { border-color: var(--primary); }
+.schulte-cell:active { transform: scale(0.96); }
+
+.schulte-cell.done {
+  background: var(--ok-bg);
+  border-color: var(--ok-bd);
+  color: var(--ok-ink);
+  cursor: default;
+}
+.schulte-cell.ok {
+  background: var(--ok-bg);
+  border-color: var(--ok-bd);
+  box-shadow: 0 0 0 3px var(--ok-bd);
+}
+.schulte-cell.bad {
+  background: var(--bad-bg);
+  border-color: var(--bad-bd);
+  color: var(--bad-ink);
+  box-shadow: 0 0 0 3px var(--bad-bd);
+}

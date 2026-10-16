@@ -1,6 +1,12 @@
 {
-  "app": { "title": "BrainGym", "tagline": "边玩边训练大脑" },
-  "nav": { "games": "游戏", "profile": "进度" },
+  "app": {
+    "title": "BrainGym",
+    "tagline": "边玩边训练大脑"
+  },
+  "nav": {
+    "games": "游戏",
+    "profile": "进度"
+  },
   "common": {
     "level": "等级",
     "streak": "连续天数",
@@ -19,12 +25,56 @@
     "lead": "选一个游戏，训练你的大脑。完全免费、无广告、无需注册：记忆力、注意力和心算。"
   },
   "game": {
-    "math": { "title": "快速心算", "desc": "尽可能快地解题——难度会自动提升。" },
-    "memory": { "title": "找出配对", "desc": "翻开卡片，找出相同的配对。训练记忆力。" },
-    "stroop": { "title": "颜色与文字", "desc": "点选文字本身所显示的颜色。训练注意力。" }
+    "math": {
+      "title": "快速心算",
+      "desc": "尽可能快地解题——难度会自动提升。"
+    },
+    "memory": {
+      "title": "找出配对",
+      "desc": "翻开卡片，找出相同的配对。训练记忆力。"
+    },
+    "stroop": {
+      "title": "颜色与文字",
+      "desc": "点选文字本身所显示的颜色。训练注意力。"
+    },
+    "constellations": {
+      "title": "星座",
+      "desc": "不断想出新的 4 星组合。不能重复——重复会清空连击！"
+    },
+    "numbers": {
+      "title": "记住数字",
+      "desc": "逐个记住数字并按顺序输入——训练记忆力。"
+    },
+    "parking": {
+      "title": "停车场",
+      "desc": "盯住进出的车辆，最后说出还剩几辆。"
+    },
+    "schulte": {
+      "title": "舒尔特方格",
+      "desc": "按顺序尽快找到数字——训练注意力。"
+    },
+    "shopping": {
+      "title": "购物清单",
+      "desc": "记住清单里的商品和价格，然后回答问题。"
+    },
+    "simon": {
+      "title": "重复序列",
+      "desc": "记住并重复闪烁的颜色——训练记忆力。"
+    },
+    "stopsignal": {
+      "title": "停止信号",
+      "desc": "看到绿色箭头就按，出现红色手掌时别按。"
+    }
   },
-  "math": { "combo": "连击", "bestCombo": "最佳连击" },
-  "memory": { "level": "第 {n} 关！", "pairs": "配对", "moves": "步数" },
+  "math": {
+    "combo": "连击",
+    "bestCombo": "最佳连击"
+  },
+  "memory": {
+    "level": "第 {n} 关！",
+    "pairs": "配对",
+    "moves": "步数"
+  },
   "stroop": {
     "hint": "点选文字本身所显示的颜色",
     "color": {
@@ -36,7 +86,9 @@
       "orange": "橙色"
     }
   },
-  "result": { "newRecord": "新纪录！" },
+  "result": {
+    "newRecord": "新纪录！"
+  },
   "profile": {
     "title": "我的进度",
     "subtitle": "进度保存在此浏览器中。可保存为文件，迁移到其他设备。",
@@ -58,6 +110,91 @@
     "copied": "已复制，快去分享",
     "failed": "分享失败"
   },
-  "footer": { "line": "免费、无广告。只为帮助人们成长。" },
-  "lang": { "label": "语言" }
+  "footer": {
+    "line": "免费、无广告。只为帮助人们成长。"
+  },
+  "lang": {
+    "label": "语言"
+  },
+  "constellations": {
+    "hint": "每次选 4 颗星，不要重复用过的组合",
+    "repeat": "重复了！",
+    "streak": "连击",
+    "unique": "独特组合",
+    "bestStreak": "最佳连击",
+    "a11y": {
+      "star": "第 {n} 颗星"
+    }
+  },
+  "numbers": {
+    "length": "长度",
+    "score": "得分",
+    "watch": "记住数字",
+    "repeat": "按顺序输入数字",
+    "reached": "达到长度",
+    "was": "答案是",
+    "erase": "删除"
+  },
+  "parking": {
+    "hint": "在心里跟着数——最后车辆会被隐藏",
+    "round": "第 {n} 轮（共 5 轮）",
+    "question": "停车场里还剩几辆车？",
+    "hits": "正确",
+    "a11y": {
+      "parking": "停车场，12 个车位",
+      "slotFree": "空车位",
+      "car": "汽车"
+    }
+  },
+  "schulte": {
+    "hint": "按顺序找出数字——从 1 到 25",
+    "table": "第 {n} 张，共 3 张",
+    "chipTable": "第 {n}/3 张",
+    "next": "下一个数字",
+    "errors": "错误",
+    "tableStat": "第 {n} 张"
+  },
+  "shopping": {
+    "hint": "记住商品和它们的价格",
+    "round": "第 {n} 轮（共 5 轮）",
+    "hits": "正确",
+    "questionOne": "{item}多少钱？",
+    "questionTwo": "{a}和{b}一共多少钱？",
+    "items": {
+      "bread": "面包",
+      "milk": "牛奶",
+      "eggs": "鸡蛋",
+      "butter": "黄油",
+      "apples": "苹果",
+      "cheese": "奶酪",
+      "bananas": "香蕉",
+      "coffee": "咖啡"
+    }
+  },
+  "simon": {
+    "length": "长度",
+    "score": "得分",
+    "watch": "注意看…",
+    "repeat": "重复",
+    "reached": "达到长度",
+    "color": {
+      "red": "红色",
+      "blue": "蓝色",
+      "green": "绿色",
+      "yellow": "黄色"
+    }
+  },
+  "stopsignal": {
+    "hint": "箭头——按！手掌——别按！",
+    "trial": "第 {k}/{total} 次",
+    "score": "得分",
+    "press": "按",
+    "hits": "正确",
+    "errors": "错误",
+    "misses": "漏按",
+    "a11y": {
+      "arrow": "绿色箭头：可以按",
+      "hand": "红色手掌：不要按"
+    }
+  }
 }

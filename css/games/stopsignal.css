@@ -1,0 +1,56 @@
+/* stopsignal.css — стили игры «Стоп-сигнал» (префикс .stop-). */
+
+.stop-hint {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 14px;
+}
+
+.stop-stage {
+  display: grid;
+  place-items: center;
+  padding: 6px 0 24px;
+}
+
+.stop-pad {
+  width: clamp(190px, 48vw, 270px);
+  height: clamp(190px, 48vw, 270px);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  border: 6px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.stop-pad:hover { transform: translateY(-1px); }
+.stop-pad:active { transform: scale(0.97); }
+
+.stop-pad.arrow { border-color: var(--ok-bd); background: var(--ok-bg); }
+.stop-pad.hand { border-color: var(--bad-bd); background: var(--bad-bg); }
+
+.stop-pad.ok { border-color: var(--ok-bd); box-shadow: 0 0 0 8px var(--ok-bg), var(--shadow); }
+.stop-pad.bad { border-color: var(--bad-bd); box-shadow: 0 0 0 8px var(--bad-bg), var(--shadow); }
+.stop-pad.miss { border-color: var(--warn-ink); box-shadow: 0 0 0 8px var(--warn-bg), var(--shadow); }
+
+.stop-face {
+  line-height: 1;
+  font-size: clamp(64px, 19vw, 112px);
+}
+.stop-face.arrow { color: var(--ok-bd); }
+.stop-face.hand { color: var(--bad-bd); }
+.stop-face.idle {
+  font-size: clamp(20px, 6vw, 28px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+@media (max-width: 420px) {
+  .stop-face { font-size: clamp(56px, 17vw, 90px); }
+}

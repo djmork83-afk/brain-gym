@@ -1,6 +1,12 @@
 {
-  "app": { "title": "BrainGym", "tagline": "Entraîne ton cerveau en jouant" },
-  "nav": { "games": "Jeux", "profile": "Progrès" },
+  "app": {
+    "title": "BrainGym",
+    "tagline": "Entraîne ton cerveau en jouant"
+  },
+  "nav": {
+    "games": "Jeux",
+    "profile": "Progrès"
+  },
   "common": {
     "level": "Niveau",
     "streak": "Série de jours",
@@ -19,12 +25,56 @@
     "lead": "Choisis un jeu et entraîne ton cerveau. Gratuit, sans pub, sans inscription : mémoire, attention et calcul."
   },
   "game": {
-    "math": { "title": "Calcul rapide", "desc": "Résous des opérations le plus vite possible — la difficulté monte toute seule." },
-    "memory": { "title": "Trouve les paires", "desc": "Retourne les cartes et trouve les paires. Entraîne la mémoire." },
-    "stroop": { "title": "Couleur et mot", "desc": "Touche la couleur dans laquelle le mot est ÉCRIT. Entraîne l'attention." }
+    "math": {
+      "title": "Calcul rapide",
+      "desc": "Résous des opérations le plus vite possible — la difficulté monte toute seule."
+    },
+    "memory": {
+      "title": "Trouve les paires",
+      "desc": "Retourne les cartes et trouve les paires. Entraîne la mémoire."
+    },
+    "stroop": {
+      "title": "Couleur et mot",
+      "desc": "Touche la couleur dans laquelle le mot est ÉCRIT. Entraîne l'attention."
+    },
+    "constellations": {
+      "title": "Constellations",
+      "desc": "Invente de nouvelles combinaisons de 4 étoiles. Pas de répétition : elle remet la série à zéro !"
+    },
+    "numbers": {
+      "title": "Retiens les nombres",
+      "desc": "Mémorise les chiffres un par un et saisis-les dans l'ordre — entraîne la mémoire."
+    },
+    "parking": {
+      "title": "Parking",
+      "desc": "Suis les voitures qui arrivent et repartent, puis dis combien il en reste."
+    },
+    "schulte": {
+      "title": "Table de Schulte",
+      "desc": "Trouve les nombres dans l'ordre le plus vite possible — entraîne l'attention."
+    },
+    "shopping": {
+      "title": "Liste de courses",
+      "desc": "Mémorise les produits et leurs prix, puis réponds à la question."
+    },
+    "simon": {
+      "title": "Répète la séquence",
+      "desc": "Observe les couleurs qui s'allument et répète-les — entraîne la mémoire."
+    },
+    "stopsignal": {
+      "title": "Signal stop",
+      "desc": "Appuie sur les flèches vertes et retiens-toi quand une main rouge apparaît."
+    }
   },
-  "math": { "combo": "Combo", "bestCombo": "Meilleur combo" },
-  "memory": { "level": "Niveau {n} !", "pairs": "Paires", "moves": "Coups" },
+  "math": {
+    "combo": "Combo",
+    "bestCombo": "Meilleur combo"
+  },
+  "memory": {
+    "level": "Niveau {n} !",
+    "pairs": "Paires",
+    "moves": "Coups"
+  },
   "stroop": {
     "hint": "Touche la couleur dans laquelle le mot est ÉCRIT",
     "color": {
@@ -36,7 +86,9 @@
       "orange": "Orange"
     }
   },
-  "result": { "newRecord": "Nouveau record !" },
+  "result": {
+    "newRecord": "Nouveau record !"
+  },
   "profile": {
     "title": "Mon progrès",
     "subtitle": "Le progrès vit dans ce navigateur. Sauvegarde-le dans un fichier pour changer d'appareil.",
@@ -58,6 +110,91 @@
     "copied": "Copié — envoie-le à un ami",
     "failed": "Échec du partage"
   },
-  "footer": { "line": "Gratuit, sans pub. Fait pour aider les gens à progresser." },
-  "lang": { "label": "Langue" }
+  "footer": {
+    "line": "Gratuit, sans pub. Fait pour aider les gens à progresser."
+  },
+  "lang": {
+    "label": "Langue"
+  },
+  "constellations": {
+    "hint": "Choisis 4 étoiles à la fois sans jamais répéter une combinaison",
+    "repeat": "Déjà vu !",
+    "streak": "Série",
+    "unique": "Uniques",
+    "bestStreak": "Meilleure série",
+    "a11y": {
+      "star": "Étoile {n}"
+    }
+  },
+  "numbers": {
+    "length": "Longueur",
+    "score": "Score",
+    "watch": "Mémorise les chiffres",
+    "repeat": "Saisis les chiffres dans l'ordre",
+    "reached": "Longueur atteinte",
+    "was": "C'était",
+    "erase": "Effacer"
+  },
+  "parking": {
+    "hint": "Garde le compte dans ta tête : à la fin, les voitures seront cachées",
+    "round": "Manche {n} sur 5",
+    "question": "Combien de voitures reste-t-il sur le parking ?",
+    "hits": "Réussites",
+    "a11y": {
+      "parking": "Parking, 12 places",
+      "slotFree": "Place libre",
+      "car": "Voiture"
+    }
+  },
+  "schulte": {
+    "hint": "Trouve les nombres dans l'ordre — de 1 à 25",
+    "table": "Tableau {n} sur 3",
+    "chipTable": "Tableau {n}/3",
+    "next": "Nombre suivant",
+    "errors": "Erreurs",
+    "tableStat": "Tableau {n}"
+  },
+  "shopping": {
+    "hint": "Mémorise les produits et leurs prix",
+    "round": "Manche {n} sur 5",
+    "hits": "Réussites",
+    "questionOne": "Combien coûtait {item} ?",
+    "questionTwo": "Combien coûtent {a} et {b} ensemble ?",
+    "items": {
+      "bread": "pain",
+      "milk": "lait",
+      "eggs": "œufs",
+      "butter": "beurre",
+      "apples": "pommes",
+      "cheese": "fromage",
+      "bananas": "bananes",
+      "coffee": "café"
+    }
+  },
+  "simon": {
+    "length": "Longueur",
+    "score": "Score",
+    "watch": "Observe…",
+    "repeat": "Répète",
+    "reached": "Longueur atteinte",
+    "color": {
+      "red": "Rouge",
+      "blue": "Bleu",
+      "green": "Vert",
+      "yellow": "Jaune"
+    }
+  },
+  "stopsignal": {
+    "hint": "Flèche — appuie ! Main — n'appuie pas !",
+    "trial": "Essai : {k}/{total}",
+    "score": "Score",
+    "press": "APPUIE",
+    "hits": "Corrects",
+    "errors": "Erreurs",
+    "misses": "Ratés",
+    "a11y": {
+      "arrow": "Flèche verte : il faut appuyer",
+      "hand": "Main rouge : ne pas appuyer"
+    }
+  }
 }

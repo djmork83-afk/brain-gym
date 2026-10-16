@@ -1,0 +1,46 @@
+/* simon.css — «Повтори последовательность»: четыре цветные кнопки 2×2. */
+
+.simon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 380px;
+  margin: 10px auto 0;
+}
+
+.simon-btn {
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: filter 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
+}
+.simon-btn[data-color='red'] { background: #e5484d; }
+.simon-btn[data-color='blue'] { background: #3b82f6; }
+.simon-btn[data-color='green'] { background: #22a06b; }
+.simon-btn[data-color='yellow'] { background: #d9a406; }
+
+.simon-btn:hover { filter: brightness(1.07); }
+.simon-btn:active { transform: scale(0.97); }
+
+/* «Загорание» при показе последовательности */
+.simon-btn.flash {
+  filter: brightness(1.75);
+  box-shadow: 0 0 0 5px var(--primary-soft), 0 0 22px rgba(0, 0, 0, 0.18);
+  transform: scale(1.02);
+}
+
+/* Нажатие игрока */
+.simon-btn.press { filter: brightness(0.82); transform: scale(0.96); }
+
+/* Ошибочное нажатие */
+.simon-btn.bad {
+  filter: brightness(0.85);
+  box-shadow: 0 0 0 5px var(--bad-bd);
+}
+
+@media (max-width: 560px) {
+  .simon-grid { max-width: 320px; gap: 10px; }
+}

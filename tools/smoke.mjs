@@ -125,7 +125,7 @@ async function main() {
     cards: [...document.querySelectorAll('.game-card h3')].map(e => e.textContent),
     badges: [document.getElementById('badge-level')?.textContent, document.getElementById('badge-streak')?.textContent],
   }))()`);
-  check('главная: заголовок и 3 карточки игр', !!(home && home.heading && home.cards && home.cards.length === 3), JSON.stringify(home.cards));
+  check('главная: заголовок и карточки игр', !!(home && home.heading && home.cards && home.cards.length >= 3), JSON.stringify(home.cards));
   check('главная: lang/бейджи', !!(home.lang && home.badges[0]), `lang=${home.lang} badges=${JSON.stringify(home.badges)}`);
   const shotHome = await shot('01-home');
 
@@ -196,10 +196,50 @@ async function main() {
   check('язык: переключение на EN работает', en.lang === 'en' && en.nav.includes('Games'), JSON.stringify(en));
   const shotEn = await shot('05-en');
 
+  // 8. Тур по всем играм реестра (кроме math — она проверена выше)
+  await evaluate(`(() => { const s = document.getElementById('lang-select'); s.value = 'ru'; s.dispatchEvent(new Event('change')); })()`);
+  await sleep(1500);
+
+  const tourShots = [];
+  const TOUR = [
+    { id: 'schulte', sel: '.schulte-cell', want: 25 },
+    { id: 'simon', sel: '.simon-btn', want: 4 },
+    { id: 'numbers', sel: '.numbers-key', want: 11 },
+    { id: 'parking', sel: '.park-slot', want: 12 },
+    { id: 'stopsignal', sel: '.stop-pad', want: 1 },
+    { id: 'shopping', sel: '.shop-row', want: 3 },
+    { id: 'constellations', sel: '.const-star', want: 25 },
+  ];
+  for (const g of TOUR) {
+    await evaluate(`location.hash = "#/game/${g.id}"`);
+    await sleep(1100);
+    const st = await evaluate(`(() => ({
+      n: document.querySelectorAll('${g.sel}').length,
+      top: !!document.querySelector('.game-top'),
+    }))()`);
+    check(`игра ${g.id}: рендер ${g.sel} × ${st.n}`, st.top && st.n >= g.want, `нужно ≥${g.want}`);
+    tourShots.push(await shot(`game-${g.id}`));
+  }
+
+  // 8b. Две функциональные мини-проверки
+  await evaluate('location.hash = "#/game/schulte"');
+  await sleep(900);
+  await evaluate(`[...document.querySelectorAll('.schulte-cell')].find(b => b.textContent.trim() === '1').click()`);
+  await sleep(400);
+  const sch = await evaluate(`document.querySelector('[data-role="next"]').textContent`);
+  check('schulte: клик по «1» продвигает прогресс', /2/.test(sch), sch);
+
+  await evaluate('location.hash = "#/game/constellations"');
+  await sleep(900);
+  await evaluate(`[...document.querySelectorAll('.const-star')].slice(0, 4).forEach(b => b.click())`);
+  await sleep(600);
+  const constScore = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
+  check('constellations: комбинация из 4 звёзд даёт +10', /10/.test(constScore), constScore);
+
   check('без JS-исключений на странице', pageErrors.length === 0, pageErrors.join(' | ').slice(0, 300));
 
   console.log('\nСкриншоты:');
-  for (const s of [shotHome, shotGame, shotResult, shotProfile, shotEn]) console.log('  ' + s);
+  for (const s of [shotHome, shotGame, shotResult, shotProfile, shotEn, ...tourShots]) console.log('  ' + s);
 
   const failed = results.filter((r) => !r.ok).length;
   console.log(`\nИТОГ: ${results.length - failed}/${results.length} проверок пройдено`);

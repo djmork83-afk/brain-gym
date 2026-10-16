@@ -19,6 +19,9 @@ js/core/progress.js  — состояние прогресса в localStorage, 
 js/core/ui.js        — el()/шаблоны, тосты, формат времени, шаринг
 js/games/registry.js — реестр игр: id, иконка, цвет; динамический import модуля
 js/games/<id>.js     — игра: start(view, ctx) → { destroy() }
+css/games/<id>.css   — стили конкретной игры (подключаются в index.html отдельными link)
+tools/smoke.mjs      — сквозная проверка в headless Chrome (CDP)
+tools/merge-locales.mjs — вливает фрагменты locales/frag/*.json в локали языков
 ```
 
 ## Контракт игры (важно для будущих игр)

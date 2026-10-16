@@ -117,10 +117,18 @@ p.lead { color: var(--muted); font-size: 17px; max-width: 680px; line-height: 1.
 .game-card[data-hue="indigo"] .game-icon { background: #e8e7fd; }
 .game-card[data-hue="green"] .game-icon { background: #dcf5e6; }
 .game-card[data-hue="orange"] .game-icon { background: #fdeed7; }
+.game-card[data-hue="blue"] .game-icon { background: #dfe9fd; }
+.game-card[data-hue="purple"] .game-icon { background: #ece1fd; }
+.game-card[data-hue="red"] .game-icon { background: #fddfe0; }
+.game-card[data-hue="teal"] .game-icon { background: #d8f2ef; }
 @media (prefers-color-scheme: dark) {
   .game-card[data-hue="indigo"] .game-icon { background: #23244a; }
   .game-card[data-hue="green"] .game-icon { background: #12331f; }
   .game-card[data-hue="orange"] .game-icon { background: #3a2a12; }
+  .game-card[data-hue="blue"] .game-icon { background: #1c2b4a; }
+  .game-card[data-hue="purple"] .game-icon { background: #2b2149; }
+  .game-card[data-hue="red"] .game-icon { background: #462023; }
+  .game-card[data-hue="teal"] .game-icon { background: #123533; }
 }
 
 /* ---------- Общее для игр ---------- */

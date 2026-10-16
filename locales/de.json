@@ -1,6 +1,12 @@
 {
-  "app": { "title": "BrainGym", "tagline": "Trainiere dein Gehirn beim Spielen" },
-  "nav": { "games": "Spiele", "profile": "Fortschritt" },
+  "app": {
+    "title": "BrainGym",
+    "tagline": "Trainiere dein Gehirn beim Spielen"
+  },
+  "nav": {
+    "games": "Spiele",
+    "profile": "Fortschritt"
+  },
   "common": {
     "level": "Level",
     "streak": "Tages-Serie",
@@ -19,12 +25,56 @@
     "lead": "Wähle ein Spiel und trainiere dein Gehirn. Kostenlos, ohne Werbung, ohne Anmeldung: Gedächtnis, Aufmerksamkeit und Rechnen."
   },
   "game": {
-    "math": { "title": "Schnellrechnen", "desc": "Löse Aufgaben so schnell du kannst — der Schwierigkeitsgrad steigt von selbst." },
-    "memory": { "title": "Finde die Paare", "desc": "Decke Karten auf und finde gleiche Paare. Trainiert das Gedächtnis." },
-    "stroop": { "title": "Farbe & Wort", "desc": "Tippe die Farbe an, in der das Wort GESCHRIEBEN ist. Trainiert die Aufmerksamkeit." }
+    "math": {
+      "title": "Schnellrechnen",
+      "desc": "Löse Aufgaben so schnell du kannst — der Schwierigkeitsgrad steigt von selbst."
+    },
+    "memory": {
+      "title": "Finde die Paare",
+      "desc": "Decke Karten auf und finde gleiche Paare. Trainiert das Gedächtnis."
+    },
+    "stroop": {
+      "title": "Farbe & Wort",
+      "desc": "Tippe die Farbe an, in der das Wort GESCHRIEBEN ist. Trainiert die Aufmerksamkeit."
+    },
+    "constellations": {
+      "title": "Sternbilder",
+      "desc": "Erfinde immer neue Kombinationen aus 4 Sternen. Keine Wiederholung – sie setzt die Serie zurück!"
+    },
+    "numbers": {
+      "title": "Merke dir die Zahlen",
+      "desc": "Merke dir die Zahlen nacheinander und gib sie der Reihe nach ein – trainiert das Gedächtnis."
+    },
+    "parking": {
+      "title": "Parkplatz",
+      "desc": "Verfolge die Autos, die kommen und fahren, und sage, wie viele noch stehen."
+    },
+    "schulte": {
+      "title": "Schulte-Tabelle",
+      "desc": "Finde die Zahlen der Reihe nach so schnell wie möglich – trainiert die Aufmerksamkeit."
+    },
+    "shopping": {
+      "title": "Einkaufsliste",
+      "desc": "Merke dir die Produkte und Preise und beantworte dann die Frage."
+    },
+    "simon": {
+      "title": "Wiederhole die Folge",
+      "desc": "Merke dir die aufleuchtenden Farben und wiederhole sie – trainiert das Gedächtnis."
+    },
+    "stopsignal": {
+      "title": "Stoppsignal",
+      "desc": "Drücke bei grünen Pfeilen und halte an, wenn eine rote Hand erscheint."
+    }
   },
-  "math": { "combo": "Kombo", "bestCombo": "Beste Kombo" },
-  "memory": { "level": "Level {n}!", "pairs": "Paare", "moves": "Züge" },
+  "math": {
+    "combo": "Kombo",
+    "bestCombo": "Beste Kombo"
+  },
+  "memory": {
+    "level": "Level {n}!",
+    "pairs": "Paare",
+    "moves": "Züge"
+  },
   "stroop": {
     "hint": "Tippe die Farbe an, in der das Wort GESCHRIEBEN ist",
     "color": {
@@ -36,7 +86,9 @@
       "orange": "Orange"
     }
   },
-  "result": { "newRecord": "Neuer Rekord!" },
+  "result": {
+    "newRecord": "Neuer Rekord!"
+  },
   "profile": {
     "title": "Mein Fortschritt",
     "subtitle": "Der Fortschritt liegt in diesem Browser. Speichere ihn als Datei, um das Gerät zu wechseln.",
@@ -58,6 +110,91 @@
     "copied": "Kopiert — schick es einem Freund",
     "failed": "Teilen fehlgeschlagen"
   },
-  "footer": { "line": "Kostenlos und ohne Werbung. Damit Menschen sich weiterentwickeln." },
-  "lang": { "label": "Sprache" }
+  "footer": {
+    "line": "Kostenlos und ohne Werbung. Damit Menschen sich weiterentwickeln."
+  },
+  "lang": {
+    "label": "Sprache"
+  },
+  "constellations": {
+    "hint": "Wähle je 4 Sterne und wiederhole keine Kombination",
+    "repeat": "Wiederholung!",
+    "streak": "Serie",
+    "unique": "Einzigartige",
+    "bestStreak": "Beste Serie",
+    "a11y": {
+      "star": "Stern {n}"
+    }
+  },
+  "numbers": {
+    "length": "Länge",
+    "score": "Punkte",
+    "watch": "Merke dir die Zahlen",
+    "repeat": "Gib die Zahlen der Reihe nach ein",
+    "reached": "Erreichte Länge",
+    "was": "Es war",
+    "erase": "Löschen"
+  },
+  "parking": {
+    "hint": "Zähle im Kopf mit – am Ende werden die Autos verdeckt",
+    "round": "Runde {n} von 5",
+    "question": "Wie viele Autos stehen noch auf dem Parkplatz?",
+    "hits": "Richtig",
+    "a11y": {
+      "parking": "Parkplatz, 12 Plätze",
+      "slotFree": "Freier Platz",
+      "car": "Auto"
+    }
+  },
+  "schulte": {
+    "hint": "Finde die Zahlen der Reihe nach – von 1 bis 25",
+    "table": "Tabelle {n} von 3",
+    "chipTable": "Tabelle {n}/3",
+    "next": "Nächste Zahl",
+    "errors": "Fehler",
+    "tableStat": "Tabelle {n}"
+  },
+  "shopping": {
+    "hint": "Merke dir die Produkte und ihre Preise",
+    "round": "Runde {n} von 5",
+    "hits": "Richtig",
+    "questionOne": "Wie viel kostete {item}?",
+    "questionTwo": "Wie viel kosten {a} und {b} zusammen?",
+    "items": {
+      "bread": "Brot",
+      "milk": "Milch",
+      "eggs": "Eier",
+      "butter": "Butter",
+      "apples": "Äpfel",
+      "cheese": "Käse",
+      "bananas": "Bananen",
+      "coffee": "Kaffee"
+    }
+  },
+  "simon": {
+    "length": "Länge",
+    "score": "Punkte",
+    "watch": "Aufpassen…",
+    "repeat": "Wiederhole",
+    "reached": "Erreichte Länge",
+    "color": {
+      "red": "Rot",
+      "blue": "Blau",
+      "green": "Grün",
+      "yellow": "Gelb"
+    }
+  },
+  "stopsignal": {
+    "hint": "Pfeil – drücken! Hand – nicht drücken!",
+    "trial": "Versuch: {k}/{total}",
+    "score": "Punkte",
+    "press": "DRÜCK",
+    "hits": "Treffer",
+    "errors": "Fehler",
+    "misses": "Verpasst",
+    "a11y": {
+      "arrow": "Grüner Pfeil: jetzt drücken",
+      "hand": "Rote Hand: nicht drücken"
+    }
+  }
 }

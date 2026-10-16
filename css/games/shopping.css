@@ -1,0 +1,92 @@
+/* shopping.css — стили игры «Список покупок» (префикс .shop-). */
+
+.shop-hint {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 12px;
+}
+
+.shop-list {
+  max-width: 460px;
+  min-height: 168px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: grid;
+  gap: 4px;
+  align-content: start;
+}
+
+.shop-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 2px;
+  font-size: 17px;
+  border-bottom: 1px dashed var(--border);
+  animation: shop-row-in 0.3s ease both;
+}
+.shop-row:last-child { border-bottom: none; }
+
+@keyframes shop-row-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.shop-name { display: flex; align-items: center; gap: 8px; }
+.shop-price { font-weight: 800; }
+
+.shop-list.hidden { align-content: center; }
+.shop-list.hidden .shop-row { display: none; }
+
+.shop-mask {
+  display: grid;
+  place-items: center;
+  font-size: 46px;
+  opacity: 0.55;
+}
+
+.shop-ask {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: var(--radius);
+  text-align: center;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+.shop-ask.flash-ok { background: var(--ok-bg); box-shadow: 0 0 0 2px var(--ok-bd); }
+.shop-ask.flash-bad { background: var(--bad-bg); box-shadow: 0 0 0 2px var(--bad-bd); }
+
+.shop-emoji {
+  font-size: clamp(34px, 10vw, 52px);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.shop-question {
+  font-weight: 800;
+  font-size: clamp(17px, 4.4vw, 22px);
+  margin: 0 0 16px;
+}
+
+.shop-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.shop-opt {
+  font-size: clamp(20px, 6vw, 28px);
+  font-weight: 800;
+  padding: 18px 8px;
+}
+.shop-opt.ok { background: var(--ok-bg); border-color: var(--ok-bd); color: var(--ok-ink); }
+.shop-opt.bad { background: var(--bad-bg); border-color: var(--bad-bd); color: var(--bad-ink); }
+
+@media (max-width: 420px) {
+  .shop-list { padding: 10px 12px; min-height: 150px; }
+  .shop-row { font-size: 16px; }
+  .shop-ask { padding: 8px; }
+}

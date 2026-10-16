@@ -1,0 +1,76 @@
+/* numbers.css — «Запомни числа»: показ цифр по одной и цифровая клавиатура. */
+
+.numbers-hint {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 10px;
+  min-height: 21px;
+}
+
+.numbers-stage {
+  min-height: 96px;
+  display: grid;
+  place-items: center;
+  margin: 2px 0 20px;
+}
+
+.numbers-digit {
+  font-size: clamp(56px, 16vw, 96px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.numbers-slots {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.numbers-slot {
+  width: clamp(34px, 9vw, 46px);
+  height: clamp(46px, 12vw, 60px);
+  display: grid;
+  place-items: center;
+  font-size: clamp(20px, 5.5vw, 28px);
+  font-weight: 800;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.numbers-slot.ok { background: var(--ok-bg); border-color: var(--ok-bd); color: var(--ok-ink); }
+.numbers-slot.bad { background: var(--bad-bg); border-color: var(--bad-bd); color: var(--bad-ink); }
+
+.numbers-answer {
+  font-size: clamp(30px, 9vw, 46px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.numbers-pad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 330px;
+  margin: 0 auto;
+  transition: opacity 0.2s ease;
+}
+.numbers-pad.disabled { opacity: 0.45; pointer-events: none; }
+
+.numbers-key {
+  height: clamp(48px, 13vw, 58px);
+  padding: 0;
+  font-size: clamp(20px, 5vw, 24px);
+  font-weight: 800;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, transform 0.08s ease;
+}
+.numbers-key:hover { border-color: var(--primary); background: var(--card-2); }
+.numbers-key:active { transform: scale(0.95); }
+.numbers-key.erase { color: var(--muted); }
+
+.numbers-spacer { display: block; }
