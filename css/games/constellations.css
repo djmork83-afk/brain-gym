@@ -32,37 +32,47 @@
     radial-gradient(1.5px 1.5px at 56% 46%, #ffffff, transparent);
 }
 
-.const-grid {
+/* Небо: квадратное поле, звёзды расставлены по двум кругам (позиции задаёт JS) */
+.const-sky {
   position: relative;
-  max-width: 480px;
+  max-width: 520px;
+  aspect-ratio: 1 / 1;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(6px, 2vw, 12px);
+}
+
+/* Пунктирные орбиты (только декор) */
+.const-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(150, 175, 255, 0.22);
+  pointer-events: none;
 }
 
 .const-star {
-  aspect-ratio: 1 / 1;
+  position: absolute;
+  width: clamp(34px, 9%, 50px);
+  height: clamp(34px, 9%, 50px);
   padding: 0;
   border-radius: 50%;
   cursor: pointer;
   display: grid;
   place-items: center;
-  font-size: clamp(11px, 3vw, 17px);
+  font-size: clamp(11px, 2.4vw, 16px);
   color: rgba(226, 233, 255, 0.75);
   border: 1px solid rgba(170, 190, 255, 0.28);
   background: radial-gradient(circle, rgba(190, 205, 255, 0.34), rgba(90, 110, 190, 0.22));
   box-shadow: 0 0 10px rgba(150, 175, 255, 0.25);
+  transform: translate(-50%, -50%);
   transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease,
     border-color 0.2s ease, color 0.2s ease;
 }
-.const-star:hover { transform: scale(1.06); }
+.const-star:hover { transform: translate(-50%, -50%) scale(1.08); }
 .const-star.picked {
   color: #3b2f00;
   border-color: #ffe066;
   background: radial-gradient(circle, #fff6b0, #ffcf33);
   box-shadow: 0 0 18px rgba(255, 214, 61, 0.85), 0 0 42px rgba(255, 214, 61, 0.35);
-  transform: scale(1.08);
+  transform: translate(-50%, -50%) scale(1.12);
 }
 
 /* Линии, соединяющие выбранные звёзды (рисуются JS) */

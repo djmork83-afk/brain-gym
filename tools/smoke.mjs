@@ -208,7 +208,7 @@ async function main() {
     { id: 'parking', sel: '.park-slot', want: 12 },
     { id: 'stopsignal', sel: '.stop-pad', want: 1 },
     { id: 'shopping', sel: '.shop-row', want: 3 },
-    { id: 'constellations', sel: '.const-star', want: 25 },
+    { id: 'constellations', sel: '.const-star', want: 21 },
   ];
   for (const g of TOUR) {
     await evaluate(`location.hash = "#/game/${g.id}"`);
@@ -237,21 +237,25 @@ async function main() {
   const p1 = await evaluate(`document.querySelectorAll('.park-slot.has').length`);
   check('parking: старт с пустой парковки, первые машины заезжают', p0 === 0 && p1 >= 1, `0.4s: ${p0} машин, 2.7s: ${p1}`);
 
-  // Созвездия: фигура соединяется линией; такой же квадрат в другом месте = повтор
+  // Созвездия: фигура соединяется линией; дуга из 4 звёзд, сдвинутая по кругу, = повтор
   await evaluate('location.hash = "#/game/constellations"');
   await sleep(900);
   const clk = (arr) => `(() => { ${JSON.stringify(arr)}.forEach((i) => document.querySelectorAll('.const-star')[i].click()); return true; })()`;
-  await evaluate(clk([0, 1, 5]));
+  await evaluate(clk([0, 1, 2]));
   await sleep(300);
   const lines = await evaluate(`document.querySelectorAll('.const-lines path').length`);
-  await evaluate(clk([6]));
+  await evaluate(clk([3]));
   await sleep(500);
   const cs1 = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
-  await evaluate(clk([2, 3, 7, 8]));
+  await evaluate(clk([4, 5, 6, 7]));
   await sleep(500);
   const cs2 = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
+  await evaluate(clk([12, 13, 14, 15]));
+  await sleep(500);
+  const cs3 = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
   check('constellations: фигура соединяется линией', lines >= 1, `path=${lines}`);
-  check('constellations: квадрат +10, тот же квадрат в другом месте — повтор', /10/.test(cs1) && /:\s*0$/.test(cs2), `${cs1} -> ${cs2}`);
+  check('constellations: дуга из 4 звёзд +10, та же дуга со сдвигом — повтор', /10/.test(cs1) && /:\s*0$/.test(cs2), `${cs1} -> ${cs2}`);
+  check('constellations: дуга на внутреннем круге — НЕ повтор (другой размер)', /:\s*10$/.test(cs3), cs3);
 
   check('без JS-исключений на странице', pageErrors.length === 0, pageErrors.join(' | ').slice(0, 300));
 

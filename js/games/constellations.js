@@ -1,9 +1,14 @@
 // constellations.js — «Созвездия»: за 60 секунд придумай как можно больше новых ФИГУР из 4 звёзд.
+// Звёзды — два круга: внешний (12) и внутренний (9), как на настоящем звёздном небе.
 // Повтор считается по форме: та же фигура в другом месте (или повёрнутая) — уже повтор.
 import { el, fmtTime, showResult } from '../core/ui.js';
 
-const SIZE = 5;
-const STARS = SIZE * SIZE;
+const OUTER = 12;      // звёзд на внешнем круге
+const INNER = 9;       // звёзд на внутреннем круге
+const STARS = OUTER + INNER;
+const R_OUTER = 1;
+const R_INNER = 0.55;  // радиус внутреннего круга (в долях внешнего)
+const SPREAD = 44;     // % смещения крайней звезды от центра поля на экране
 const DURATION = 60;
 const PICK = 4;
 const UNIQUE_POINTS = 10;
@@ -11,6 +16,18 @@ const REPEAT_COST = 10;
 const FLASH_MS = 700;
 const RESET_MS = 250;
 const LOW_TIME = 10;
+
+// Идеальные координаты звёзд (единица = радиус внешнего круга)
+const STAR_POS = [];
+for (let i = 0; i < OUTER; i += 1) {
+  const a = (i * 2 * Math.PI) / OUTER;
+  STAR_POS.push([R_OUTER * Math.cos(a), R_OUTER * Math.sin(a)]);
+}
+for (let i = 0; i < INNER; i += 1) {
+  // внутреннее кольцо смещено на полшага, чтобы лучи не совпадали с внешними
+  const a = (i * 2 * Math.PI) / INNER + Math.PI / INNER;
+  STAR_POS.push([R_INNER * Math.cos(a), R_INNER * Math.sin(a)]);
+}
 
 export default {
   id: 'constellations',
@@ -25,7 +42,7 @@ export default {
     const picked = new Set();
     const seen = new Set();
     let starEls = [];
-    let gridEl, flashEl, scoreEl, streakEl, timeEl, barEl, svgEl;
+    let skyEl, flashEl, scoreEl, streakEl, timeEl, barEl, svgEl;
 
     function after(ms, fn) {
       const id = setTimeout(() => {
@@ -56,11 +73,14 @@ export default {
         <p class="const-hint">${t('constellations.hint')}</p>
         <div class="const-field">
           <svg class="const-lines" data-role="lines" aria-hidden="true"></svg>
-          <div class="const-grid" data-role="grid" role="group" aria-label="${t('constellations.hint')}"></div>
+          <div class="const-sky" data-role="sky" role="group" aria-label="${t('constellations.hint')}">
+            <div class="const-ring" style="width:88%;height:88%;left:6%;top:6%"></div>
+            <div class="const-ring" style="width:48.4%;height:48.4%;left:25.8%;top:25.8%"></div>
+          </div>
           <div class="const-flash" data-role="flash" role="status">${t('constellations.repeat')}</div>
         </div>
       `;
-      gridEl = view.querySelector('[data-role="grid"]');
+      skyEl = view.querySelector('[data-role="sky"]');
       flashEl = view.querySelector('[data-role="flash"]');
       svgEl = view.querySelector('[data-role="lines"]');
       scoreEl = view.querySelector('[data-role="score"]');
@@ -69,12 +89,12 @@ export default {
       barEl = view.querySelector('[data-role="bar"] > i');
       view.querySelector('[data-role="exit"]').addEventListener('click', () => ctx.exit());
 
-      gridEl.innerHTML = '';
       starEls = [];
       for (let i = 0; i < STARS; i += 1) {
-        const b = el(`<button class="const-star" type="button" data-role="star" aria-pressed="false" aria-label="${t('constellations.a11y.star', { n: i + 1 })}">✦</button>`);
+        const [x, y] = STAR_POS[i];
+        const b = el(`<button class="const-star" type="button" data-role="star" aria-pressed="false" aria-label="${t('constellations.a11y.star', { n: i + 1 })}" style="left:${(50 + SPREAD * x).toFixed(2)}%;top:${(50 + SPREAD * y).toFixed(2)}%">✦</button>`);
         b.addEventListener('click', () => toggleStar(i));
-        gridEl.appendChild(b);
+        skyEl.appendChild(b);
         starEls.push(b);
       }
       flashEl.classList.remove('show');
@@ -89,35 +109,20 @@ export default {
     }
 
     /**
-     * Ключ формы выбранных звёзд. Фигура приводится к каноническому виду:
-     * независима от места на поле (перенос), поворота и отражения.
-     * Квадрат 2×2 в левом углу и он же в правом — ОДИН ключ (повтор).
+     * Ключ формы фигуры: отсортированный набор попарных расстояний между 4 точками.
+     * Совпадает у одной и той же фигуры в любом месте поля, в повороте и в отражении
+     * (расстояния считаются по идеальным координатам, а не по DOM).
      */
     function shapeKey(indices) {
-      const cells = indices.map((i) => [Math.floor(i / SIZE), i % SIZE]);
-      const variants = [];
-      for (let flip = 0; flip < 2; flip += 1) {
-        for (let rot = 0; rot < 4; rot += 1) {
-          let pts = cells.map(([r0, c0]) => {
-            let r = r0;
-            let c = flip ? -c0 : c0;
-            for (let k = 0; k < rot; k += 1) {
-              const tr = r;
-              r = c;
-              c = -tr;
-            }
-            return [r, c];
-          });
-          const minR = Math.min(...pts.map((p) => p[0]));
-          const minC = Math.min(...pts.map((p) => p[1]));
-          pts = pts
-            .map(([r, c]) => [r - minR, c - minC])
-            .sort((a, b) => a[0] - b[0] || a[1] - b[1]);
-          variants.push(pts.map(([r, c]) => `${r},${c}`).join(';'));
+      const pts = indices.map((i) => STAR_POS[i]);
+      const dists = [];
+      for (let a = 0; a < pts.length; a += 1) {
+        for (let b = a + 1; b < pts.length; b += 1) {
+          dists.push(Math.hypot(pts[a][0] - pts[b][0], pts[a][1] - pts[b][1]));
         }
       }
-      variants.sort();
-      return variants[0];
+      dists.sort((x, y) => x - y);
+      return dists.map((d) => d.toFixed(4)).join(',');
     }
 
     /** Соединяет выбранные звёзды линией — фигура должна быть видна. */
