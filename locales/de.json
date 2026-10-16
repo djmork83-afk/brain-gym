@@ -117,14 +117,15 @@
     "label": "Sprache"
   },
   "constellations": {
-    "hint": "Wähle je 4 Sterne und wiederhole keine Kombination",
+    "hint": "Verbinde 4 Sterne zu einer Figur. Dieselbe Figur (egal wo, gedreht oder gespiegelt) zählt als Wiederholung!",
     "repeat": "Wiederholung!",
     "streak": "Serie",
     "unique": "Einzigartige",
     "bestStreak": "Beste Serie",
     "a11y": {
       "star": "Stern {n}"
-    }
+    },
+    "desc": "Erfinde neue Figuren aus 4 Sternen. Dieselbe Figur an anderer Stelle ist eine Wiederholung — sie bricht deine Serie!"
   },
   "numbers": {
     "length": "Länge",
@@ -136,7 +137,7 @@
     "erase": "Löschen"
   },
   "parking": {
-    "hint": "Zähle im Kopf mit – am Ende werden die Autos verdeckt",
+    "hint": "Der Parkplatz ist leer. Beobachte, wer ein- und ausfährt — wie viele Autos stehen am Ende noch da?",
     "round": "Runde {n} von 5",
     "question": "Wie viele Autos stehen noch auf dem Parkplatz?",
     "hits": "Richtig",

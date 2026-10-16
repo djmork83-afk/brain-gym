@@ -6,7 +6,7 @@ const SLOT_COUNT = 12;
 const CARS = ['🚗', '🚙', '🚕', '🚌'];
 const EVENTS = [6, 7, 8, 9, 10]; // событий в раундах 1..5
 const EVENT_PAUSE = [750, 715, 680, 645, 600]; // пауза между событиями, мс
-const START_SHOW = 1000; // показ начальной расстановки, мс
+const START_SHOW = 1000; // показ пустой парковки перед потоком событий, мс
 const BEFORE_QUESTION = 600; // пауза перед вопросом, мс
 const AFTER_ANSWER = 1200; // пауза после ответа, мс
 
@@ -128,9 +128,8 @@ export default {
 
     function startRound() {
       awaiting = false;
-      slots = new Array(SLOT_COUNT).fill(null);
-      const startCars = 2 + rnd(5); // 2..6
-      for (const i of shuffle([...Array(SLOT_COUNT).keys()]).slice(0, startCars)) slots[i] = pick(CARS);
+      slots = new Array(SLOT_COUNT).fill(null); // парковка пуста — счёт идёт с нуля
+      st.eventIdx = 0;
       for (let i = 0; i < SLOT_COUNT; i += 1) drawSlot(i);
       fieldEl.classList.remove('hidden');
       clearFlash();
@@ -149,14 +148,18 @@ export default {
       after(at, ask);
     }
 
-    /** Одно событие: машина приезжает на свободное место или уезжает. */
+    /**
+     * Одно событие: машина приезжает на свободное место или уезжает.
+     * Первые два события раунда — всегда заезды: старт с пустой парковки
+     * должен быть понятным (две заехали, одна уехала — считаем, что внутри).
+     */
     function eventStep() {
       const occ = [];
       const free = [];
       for (let i = 0; i < SLOT_COUNT; i += 1) (slots[i] ? occ : free).push(i);
       let arrive;
       if (!free.length) arrive = false;
-      else if (!occ.length) arrive = true;
+      else if (!occ.length || st.eventIdx < 2) arrive = true;
       else {
         // чем больше машин, тем чаще уезжают — держим число в «интересной» зоне
         const p = Math.min(0.85, Math.max(0.15, 0.5 + (SLOT_COUNT / 2 - occ.length) * 0.07));
@@ -171,6 +174,7 @@ export default {
         slots[i] = null;
         drawSlot(i);
       }
+      st.eventIdx += 1;
     }
 
     function ask() {
@@ -245,7 +249,7 @@ export default {
 
     function startGame() {
       clearTimers();
-      st = { round: 1, score: 0, hits: 0, startedAt: Date.now() };
+      st = { round: 1, score: 0, hits: 0, eventIdx: 0, startedAt: Date.now() };
       finished = false;
       awaiting = false;
       build();

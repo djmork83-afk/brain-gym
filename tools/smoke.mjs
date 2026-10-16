@@ -221,7 +221,7 @@ async function main() {
     tourShots.push(await shot(`game-${g.id}`));
   }
 
-  // 8b. Две функциональные мини-проверки
+  // 8b. Функциональные мини-проверки механик
   await evaluate('location.hash = "#/game/schulte"');
   await sleep(900);
   await evaluate(`[...document.querySelectorAll('.schulte-cell')].find(b => b.textContent.trim() === '1').click()`);
@@ -229,12 +229,29 @@ async function main() {
   const sch = await evaluate(`document.querySelector('[data-role="next"]').textContent`);
   check('schulte: клик по «1» продвигает прогресс', /2/.test(sch), sch);
 
+  // Парковка: старт с пустой, первые машины заезжают на глазах
+  await evaluate('location.hash = "#/game/parking"');
+  await sleep(400);
+  const p0 = await evaluate(`document.querySelectorAll('.park-slot.has').length`);
+  await sleep(2300);
+  const p1 = await evaluate(`document.querySelectorAll('.park-slot.has').length`);
+  check('parking: старт с пустой парковки, первые машины заезжают', p0 === 0 && p1 >= 1, `0.4s: ${p0} машин, 2.7s: ${p1}`);
+
+  // Созвездия: фигура соединяется линией; такой же квадрат в другом месте = повтор
   await evaluate('location.hash = "#/game/constellations"');
   await sleep(900);
-  await evaluate(`[...document.querySelectorAll('.const-star')].slice(0, 4).forEach(b => b.click())`);
-  await sleep(600);
-  const constScore = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
-  check('constellations: комбинация из 4 звёзд даёт +10', /10/.test(constScore), constScore);
+  const clk = (arr) => `(() => { ${JSON.stringify(arr)}.forEach((i) => document.querySelectorAll('.const-star')[i].click()); return true; })()`;
+  await evaluate(clk([0, 1, 5]));
+  await sleep(300);
+  const lines = await evaluate(`document.querySelectorAll('.const-lines path').length`);
+  await evaluate(clk([6]));
+  await sleep(500);
+  const cs1 = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
+  await evaluate(clk([2, 3, 7, 8]));
+  await sleep(500);
+  const cs2 = await evaluate(`document.querySelector('[data-role="score"]').textContent`);
+  check('constellations: фигура соединяется линией', lines >= 1, `path=${lines}`);
+  check('constellations: квадрат +10, тот же квадрат в другом месте — повтор', /10/.test(cs1) && /:\s*0$/.test(cs2), `${cs1} -> ${cs2}`);
 
   check('без JS-исключений на странице', pageErrors.length === 0, pageErrors.join(' | ').slice(0, 300));
 

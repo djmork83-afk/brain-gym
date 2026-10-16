@@ -117,14 +117,15 @@
     "label": "Language"
   },
   "constellations": {
-    "hint": "Pick 4 stars at a time and never reuse a combination",
+    "hint": "Connect 4 stars into a shape. The same shape (anywhere, rotated or flipped) is a repeat!",
     "repeat": "Repeat!",
     "streak": "Streak",
     "unique": "Unique",
     "bestStreak": "Best streak",
     "a11y": {
       "star": "Star {n}"
-    }
+    },
+    "desc": "Invent new shapes from 4 stars. The same shape anywhere is a repeat — repeats break your streak!"
   },
   "numbers": {
     "length": "Length",
@@ -136,7 +137,7 @@
     "erase": "Erase"
   },
   "parking": {
-    "hint": "Keep the count in your head — the cars get hidden at the end",
+    "hint": "The lot starts empty. Watch who drives in and out — answer how many cars are left at the end.",
     "round": "Round {n} of 5",
     "question": "How many cars are still in the parking lot?",
     "hits": "Correct",

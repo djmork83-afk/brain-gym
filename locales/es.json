@@ -117,14 +117,15 @@
     "label": "Idioma"
   },
   "constellations": {
-    "hint": "Elige 4 estrellas a la vez y no repitas ninguna combinación",
+    "hint": "Une 4 estrellas en una figura. La misma figura (en cualquier lugar, girada o reflejada) ¡es repetir!",
     "repeat": "¡Repetido!",
     "streak": "Racha",
     "unique": "Únicas",
     "bestStreak": "Mejor racha",
     "a11y": {
       "star": "Estrella {n}"
-    }
+    },
+    "desc": "Inventa nuevas figuras con 4 estrellas. La misma figura en otro lugar ya es repetir: ¡rompe la racha!"
   },
   "numbers": {
     "length": "Longitud",
@@ -136,7 +137,7 @@
     "erase": "Borrar"
   },
   "parking": {
-    "hint": "Lleva la cuenta mentalmente: al final los coches se ocultan",
+    "hint": "El aparcamiento está vacío. Observa quién entra y sale: al final, ¿cuántos coches quedan?",
     "round": "Ronda {n} de 5",
     "question": "¿Cuántos coches quedan en el aparcamiento?",
     "hits": "Aciertos",

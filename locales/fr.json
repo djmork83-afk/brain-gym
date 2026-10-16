@@ -117,14 +117,15 @@
     "label": "Langue"
   },
   "constellations": {
-    "hint": "Choisis 4 étoiles à la fois sans jamais répéter une combinaison",
+    "hint": "Relie 4 étoiles pour former une figure. La même figure (n'importe où, tournée ou retournée) est un doublon !",
     "repeat": "Déjà vu !",
     "streak": "Série",
     "unique": "Uniques",
     "bestStreak": "Meilleure série",
     "a11y": {
       "star": "Étoile {n}"
-    }
+    },
+    "desc": "Invente de nouvelles figures avec 4 étoiles. La même figure ailleurs, c'est un doublon : il casse ta série !"
   },
   "numbers": {
     "length": "Longueur",
@@ -136,7 +137,7 @@
     "erase": "Effacer"
   },
   "parking": {
-    "hint": "Garde le compte dans ta tête : à la fin, les voitures seront cachées",
+    "hint": "Le parking est vide. Regarde qui entre et qui sort — combien de voitures restera-t-il à la fin ?",
     "round": "Manche {n} sur 5",
     "question": "Combien de voitures reste-t-il sur le parking ?",
     "hits": "Réussites",

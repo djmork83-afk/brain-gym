@@ -1,4 +1,5 @@
-// constellations.js — «Созвездия»: за 60 секунд придумай как можно больше новых комбинаций из 4 звёзд.
+// constellations.js — «Созвездия»: за 60 секунд придумай как можно больше новых ФИГУР из 4 звёзд.
+// Повтор считается по форме: та же фигура в другом месте (или повёрнутая) — уже повтор.
 import { el, fmtTime, showResult } from '../core/ui.js';
 
 const SIZE = 5;
@@ -24,7 +25,7 @@ export default {
     const picked = new Set();
     const seen = new Set();
     let starEls = [];
-    let gridEl, flashEl, scoreEl, streakEl, timeEl, barEl;
+    let gridEl, flashEl, scoreEl, streakEl, timeEl, barEl, svgEl;
 
     function after(ms, fn) {
       const id = setTimeout(() => {
@@ -54,12 +55,14 @@ export default {
         <div class="timerbar" data-role="bar"><i></i></div>
         <p class="const-hint">${t('constellations.hint')}</p>
         <div class="const-field">
+          <svg class="const-lines" data-role="lines" aria-hidden="true"></svg>
           <div class="const-grid" data-role="grid" role="group" aria-label="${t('constellations.hint')}"></div>
           <div class="const-flash" data-role="flash" role="status">${t('constellations.repeat')}</div>
         </div>
       `;
       gridEl = view.querySelector('[data-role="grid"]');
       flashEl = view.querySelector('[data-role="flash"]');
+      svgEl = view.querySelector('[data-role="lines"]');
       scoreEl = view.querySelector('[data-role="score"]');
       streakEl = view.querySelector('[data-role="streak"]');
       timeEl = view.querySelector('[data-role="time"]');
@@ -85,6 +88,59 @@ export default {
       barEl.parentElement.classList.toggle('low', st.left <= LOW_TIME);
     }
 
+    /**
+     * Ключ формы выбранных звёзд. Фигура приводится к каноническому виду:
+     * независима от места на поле (перенос), поворота и отражения.
+     * Квадрат 2×2 в левом углу и он же в правом — ОДИН ключ (повтор).
+     */
+    function shapeKey(indices) {
+      const cells = indices.map((i) => [Math.floor(i / SIZE), i % SIZE]);
+      const variants = [];
+      for (let flip = 0; flip < 2; flip += 1) {
+        for (let rot = 0; rot < 4; rot += 1) {
+          let pts = cells.map(([r0, c0]) => {
+            let r = r0;
+            let c = flip ? -c0 : c0;
+            for (let k = 0; k < rot; k += 1) {
+              const tr = r;
+              r = c;
+              c = -tr;
+            }
+            return [r, c];
+          });
+          const minR = Math.min(...pts.map((p) => p[0]));
+          const minC = Math.min(...pts.map((p) => p[1]));
+          pts = pts
+            .map(([r, c]) => [r - minR, c - minC])
+            .sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+          variants.push(pts.map(([r, c]) => `${r},${c}`).join(';'));
+        }
+      }
+      variants.sort();
+      return variants[0];
+    }
+
+    /** Соединяет выбранные звёзды линией — фигура должна быть видна. */
+    function drawLines() {
+      if (!svgEl) return;
+      while (svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
+      if (picked.size < 2) return;
+      const field = svgEl.parentElement.getBoundingClientRect();
+      const pts = [...picked].map((i) => {
+        const r = starEls[i].getBoundingClientRect();
+        return [r.left + r.width / 2 - field.left, r.top + r.height / 2 - field.top];
+      });
+      const d = pts.map(([x, y], i) => `${i ? 'L' : 'M'} ${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgba(255, 214, 61, 0.9)');
+      path.setAttribute('stroke-width', '3');
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-linejoin', 'round');
+      svgEl.appendChild(path);
+    }
+
     function toggleStar(i) {
       if (destroyed || finished || locked) return;
       const star = starEls[i];
@@ -92,17 +148,19 @@ export default {
         picked.delete(i);
         star.classList.remove('picked');
         star.setAttribute('aria-pressed', 'false');
+        drawLines();
         return;
       }
       picked.add(i);
       star.classList.add('picked');
       star.setAttribute('aria-pressed', 'true');
+      drawLines();
       if (picked.size === PICK) commit();
     }
 
-    /** Комбинация из 4 звёзд: новая — очки и серия, повтор — минус и сброс серии. */
+    /** Фигура из 4 звёзд: новая форма — очки и серия; та же форма — минус и сброс серии. */
     function commit() {
-      const key = [...picked].sort((a, b) => a - b).join('-');
+      const key = shapeKey([...picked]);
       if (seen.has(key)) {
         st.repeats += 1;
         st.streak = 0;
@@ -127,6 +185,7 @@ export default {
           b.classList.remove('picked');
           b.setAttribute('aria-pressed', 'false');
         }
+        drawLines();
       });
     }
 
